@@ -1,0 +1,19 @@
+{
+  "role": "Role",
+  "path": "Path",
+  "permissions": "Permissions",
+  "priority": "Priority",
+  "no_rules": "No ACL rules configured yet",
+  "role_required": "Role is required",
+  "path_required": "Path is required",
+  "permission": {
+    "read": "Read/List - View and list files and directories",
+    "write": "Write/Upload - Create and upload files",
+    "delete": "Delete - Remove files and directories",
+    "manage": "Manage - Rename, move, and copy files",
+    "share": "Share - Create file shares",
+    "download": "Download - Download files"
+  },
+  "path_help": "Use '/' for root, '/folder' for specific folder, or '/folder/*' for folder and all subfolders",
+  "priority_help": "Higher priority rules override lower priority rules. Default is 0."
+}
