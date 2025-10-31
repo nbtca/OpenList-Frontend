@@ -1,13 +1,14 @@
-import { Icon } from "@hope-ui/solid"
+import { Icon, Button } from "@hope-ui/solid"
 import { FiGithub, FiLogIn } from "solid-icons/fi"
 import { BsMicrosoft } from "solid-icons/bs"
 import { AiOutlineGoogle, AiOutlineDingtalk } from "solid-icons/ai"
 import { base_path, changeToken, r } from "~/utils"
 import { getSetting, getSettingBool } from "~/store"
-import { useRouter } from "~/hooks"
+import { useRouter, useT } from "~/hooks"
 import { onCleanup } from "solid-js"
 
-const SSOLogin = () => {
+const SSOLogin = (props?: { showAsButton?: boolean }) => {
+  const t = useT()
   const ssoSignEnabled = getSettingBool("sso_login_enabled")
   const loginPlatform = getSetting("sso_login_platform")
   const usecompatibility = getSettingBool("sso_compatibility_mode")
@@ -54,6 +55,20 @@ const SSOLogin = () => {
       default:
         icon = FiLogIn
     }
+    
+    if (props?.showAsButton) {
+      return (
+        <Button
+          w="$full"
+          colorScheme="info"
+          leftIcon={<Icon as={icon} />}
+          onClick={login}
+        >
+          {t("login.sso_login", `Login with ${loginPlatform}`)}
+        </Button>
+      )
+    }
+    
     return (
       <Icon cursor="pointer" boxSize="$8" as={icon} p="$0_5" onclick={login} />
     )

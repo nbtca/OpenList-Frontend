@@ -6,20 +6,32 @@ import {
   Icon,
   Kbd,
   CenterProps,
+  Avatar,
+  Button,
+  Menu,
+  MenuTrigger,
+  MenuContent,
+  MenuItem,
 } from "@hope-ui/solid"
 import { changeColor } from "seemly"
 import { Show, createMemo } from "solid-js"
-import { getMainColor, getSetting, local, objStore, State } from "~/store"
+import { getMainColor, getSetting, getSettingBool, local, objStore, State, me } from "~/store"
 import { BsSearch } from "solid-icons/bs"
 import { CenterLoading } from "~/components"
 import { Container } from "../Container"
 import { bus } from "~/utils"
 import { Layout } from "./layout"
 import { isMac } from "~/utils/compatibility"
+import { UserMethods } from "~/types"
+import { useRouter, useT } from "~/hooks"
+import { AiOutlineUser, AiOutlineLogin } from "solid-icons/ai"
 
 export const Header = () => {
   const logos = getSetting("logo").split("\n")
   const logo = useColorModeValue(logos[0], logos.pop())
+  const t = useT()
+  const { to } = useRouter()
+  const ssoEnabled = getSettingBool("sso_login_enabled")
 
   const stickyProps = createMemo<CenterProps>(() => {
     switch (local["position_of_header_navbar"]) {
@@ -28,6 +40,14 @@ export const Header = () => {
       default:
         return { position: undefined, zIndex: undefined, top: undefined }
     }
+  })
+
+  const userAvatar = createMemo(() => {
+    const currentUser = me()
+    if (ssoEnabled && !UserMethods.is_guest(currentUser) && currentUser.sso_id) {
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.username)}&background=random`
+    }
+    return null
   })
 
   return (
@@ -81,6 +101,34 @@ export const Header = () => {
                 </HStack>
               </Show>
               <Layout />
+            </Show>
+            <Show
+              when={!UserMethods.is_guest(me())}
+              fallback={
+                <Button
+                  size="sm"
+                  leftIcon={<AiOutlineLogin />}
+                  onClick={() => to("/@login")}
+                >
+                  {t("login.login")}
+                </Button>
+              }
+            >
+              <Menu>
+                <MenuTrigger
+                  as={Avatar}
+                  size="sm"
+                  src={userAvatar()}
+                  name={me().username}
+                  cursor="pointer"
+                  icon={<AiOutlineUser />}
+                />
+                <MenuContent>
+                  <MenuItem onClick={() => to("/@manage")}>
+                    {t("home.footer.manage")}
+                  </MenuItem>
+                </MenuContent>
+              </Menu>
             </Show>
           </HStack>
         </HStack>

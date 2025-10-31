@@ -12,10 +12,12 @@ import {
   Heading,
   HStack,
   IconButton,
+  Button,
   useColorModeValue,
 } from "@hope-ui/solid"
 import { TiThMenu } from "solid-icons/ti"
 import { IoExit } from "solid-icons/io"
+import { AiOutlineHome } from "solid-icons/ai"
 import { SwitchColorMode, SwitchLanguageWhite } from "~/components"
 import { useFetch, useRouter, useT } from "~/hooks"
 import { SideMenu } from "./SideMenu"
@@ -70,6 +72,17 @@ const Header = () => {
           >
             {t("manage.title")}
           </Heading>
+          <Button
+            size="sm"
+            leftIcon={<AiOutlineHome />}
+            colorScheme="info"
+            variant="subtle"
+            onClick={() => {
+              to("/")
+            }}
+          >
+            {t("manage.sidemenu.home")}
+          </Button>
         </HStack>
         <HStack spacing="$1">
           <IconButton
