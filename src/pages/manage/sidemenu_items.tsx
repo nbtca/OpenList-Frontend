@@ -14,6 +14,7 @@ import {
   BsBucket,
   BsHddNetwork,
   BsArrowLeftRight,
+  BsShieldLock,
 } from "solid-icons/bs"
 import { FiLogIn } from "solid-icons/fi"
 import { SiMetabase } from "solid-icons/si"
@@ -186,6 +187,12 @@ export const side_menu_items: SideMenuItem[] = [
     icon: SiMetabase,
     to: "/@manage/metas",
     component: lazy(() => import("./metas/Metas")),
+  },
+  {
+    title: "manage.sidemenu.acl",
+    icon: BsShieldLock,
+    to: "/@manage/acl",
+    component: lazy(() => import("./acl/ACL")),
   },
   {
     title: "manage.sidemenu.indexes",

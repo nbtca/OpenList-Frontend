@@ -263,3 +263,28 @@ export const updateIndex = async (paths = [], max_depth = -1): PEmptyResp => {
     max_depth,
   })
 }
+
+// ACL API functions
+export const getACLRules = (): Promise<PResp<any[]>> => {
+  return r.get("/admin/acl/list")
+}
+
+export const getACLRule = (id: number): Promise<PResp<any>> => {
+  return r.get("/admin/acl/get", { params: { id } })
+}
+
+export const createACLRule = (rule: any): PEmptyResp => {
+  return r.post("/admin/acl/create", rule)
+}
+
+export const updateACLRule = (rule: any): PEmptyResp => {
+  return r.post("/admin/acl/update", rule)
+}
+
+export const deleteACLRule = (id: number): PEmptyResp => {
+  return r.post("/admin/acl/delete", { id })
+}
+
+export const getPathACLInfo = (path: string): Promise<PResp<any>> => {
+  return r.post("/acl/info", { path })
+}

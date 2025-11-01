@@ -111,6 +111,7 @@ const Users = () => {
                   "username",
                   "base_path",
                   "role",
+                  "roles",
                   "permission",
                   "available",
                 ]}
@@ -129,6 +130,7 @@ const Users = () => {
                   <Td>
                     <Role role={user.role} />
                   </Td>
+                  <Td>{user.roles || "-"}</Td>
                   <Td>
                     <Permissions user={user} />
                   </Td>
