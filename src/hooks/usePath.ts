@@ -177,6 +177,7 @@ export const usePath = () => {
         ObjStore.setHeader(data.header)
         ObjStore.setWrite(data.write)
         ObjStore.setProvider(data.provider)
+        ObjStore.setPermissions(data.permissions ?? 0)
         ObjStore.setState(State.Folder)
       },
       handleErr,

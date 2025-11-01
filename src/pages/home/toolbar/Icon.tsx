@@ -1,10 +1,33 @@
 import { ElementType, Icon, IconProps, Tooltip } from "@hope-ui/solid"
 import { IconTypes } from "solid-icons"
 import { useT } from "~/hooks"
-import { getMainColor, me } from "~/store"
-import { UserMethods, UserPermissions } from "~/types"
+import { getMainColor, me, objStore } from "~/store"
+import {
+  UserMethods,
+  UserPermissions,
+  ACLPermission,
+  ACLMethods,
+} from "~/types"
 import { hoverColor } from "~/utils"
 import { operations } from "./operations"
+
+// Map toolbar operations to ACL permissions
+const operationPermissionMap: Record<string, ACLPermission | null> = {
+  rename: ACLPermission.Manage,
+  copy: ACLPermission.Manage,
+  move: ACLPermission.Manage,
+  delete: ACLPermission.Delete,
+  decompress: ACLPermission.Manage,
+  copy_link: null, // No ACL check needed
+  mkdir: ACLPermission.Write,
+  recursive_move: ACLPermission.Manage,
+  remove_empty_directory: ACLPermission.Delete,
+  batch_rename: ACLPermission.Manage,
+  new_file: ACLPermission.Write,
+  cancel_select: null, // No ACL check needed
+  download: ACLPermission.Download,
+  share: ACLPermission.Share,
+}
 
 export const CenterIcon = <C extends ElementType = "svg">(
   props: IconProps<C> & {
@@ -13,6 +36,17 @@ export const CenterIcon = <C extends ElementType = "svg">(
 ) => {
   const index = UserPermissions.findIndex((p) => p === props.name)
   if (index !== -1 && !UserMethods.can(me(), index)) return null
+
+  // Check ACL permissions
+  const requiredPerm = operationPermissionMap[props.name]
+  if (requiredPerm !== undefined && requiredPerm !== null) {
+    const hasPermission = ACLMethods.hasPermission(
+      objStore.permissions,
+      requiredPerm,
+    )
+    if (!hasPermission) return null
+  }
+
   const t = useT()
   return (
     <Tooltip placement="top" withArrow label={t(`home.toolbar.${props.name}`)}>

@@ -5,17 +5,36 @@ import { HStack, Icon, Text, useColorMode, Image } from "@hope-ui/solid"
 import { operations } from "../toolbar/operations"
 import { For, Show } from "solid-js"
 import { bus, convertURL, notify } from "~/utils"
-import { ObjType, UserMethods, UserPermissions } from "~/types"
+import {
+  ObjType,
+  UserMethods,
+  UserPermissions,
+  ACLPermission,
+  ACLMethods,
+} from "~/types"
 import {
   getSettingBool,
   haveSelected,
   me,
   oneChecked,
   selectedObjs,
+  objStore,
 } from "~/store"
 import { players } from "../previews/video_box"
 import { BsPlayCircleFill } from "solid-icons/bs"
 import { isArchive } from "~/store/archive"
+
+// Map context menu operations to ACL permissions
+const operationPermissionMap: Record<string, ACLPermission | null> = {
+  rename: ACLPermission.Manage,
+  move: ACLPermission.Manage,
+  copy: ACLPermission.Manage,
+  delete: ACLPermission.Delete,
+  share: ACLPermission.Share,
+  decompress: ACLPermission.Manage,
+  copy_link: null, // No ACL check needed
+  download: ACLPermission.Download,
+}
 
 const ItemContent = (props: { name: string }) => {
   const t = useT()
@@ -55,7 +74,17 @@ export const ContextMenu = () => {
           <Item
             hidden={() => {
               const index = UserPermissions.findIndex((item) => item === name)
-              return isShare() || !UserMethods.can(me(), index)
+              if (isShare() || !UserMethods.can(me(), index)) return true
+
+              // Check ACL permissions
+              const requiredPerm = operationPermissionMap[name]
+              if (requiredPerm !== undefined && requiredPerm !== null) {
+                return !ACLMethods.hasPermission(
+                  objStore.permissions,
+                  requiredPerm,
+                )
+              }
+              return false
             }}
             onClick={() => {
               bus.emit("tool", name)
@@ -70,12 +99,16 @@ export const ContextMenu = () => {
           const index = UserPermissions.findIndex(
             (item) => item === "decompress",
           )
-          return (
-            isShare() ||
-            !UserMethods.can(me(), index) ||
-            selectedObjs().some((o) => o.is_dir) ||
-            selectedObjs().some((o) => !isArchive(o.name))
-          )
+          if (isShare() || !UserMethods.can(me(), index)) return true
+          if (selectedObjs().some((o) => o.is_dir)) return true
+          if (selectedObjs().some((o) => !isArchive(o.name))) return true
+
+          // Check ACL permissions
+          const requiredPerm = operationPermissionMap["decompress"]
+          if (requiredPerm !== null) {
+            return !ACLMethods.hasPermission(objStore.permissions, requiredPerm)
+          }
+          return false
         }}
         onClick={() => {
           bus.emit("tool", "decompress")

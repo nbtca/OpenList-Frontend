@@ -28,6 +28,7 @@ const initialObjStore = {
   readme: "",
   header: "",
   provider: "",
+  permissions: 0, // ACL permissions bitmask
   state: State.Initial,
   err: "",
 }
@@ -65,6 +66,8 @@ export const ObjStore = {
   setHeader: (header: string) => setObjStore("header", header),
   setRelated: (related: Obj[]) => setObjStore("related", related),
   setWrite: (write: boolean) => setObjStore("write", write),
+  setPermissions: (permissions: number) =>
+    setObjStore("permissions", permissions),
   // setGetResp: (resp: FsGetResp) => {
   //   setObjStore("obj", resp.data);
   //   setObjs(resp.data.related);

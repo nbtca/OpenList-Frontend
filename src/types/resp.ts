@@ -18,6 +18,7 @@ export type FsListResp = Resp<{
   header: string
   write: boolean
   provider: string
+  permissions: number // ACL permissions bitmask
 }>
 
 export type SearchNode = {
