@@ -1,83 +1,71 @@
 import {
   Button,
-  FormControl,
+  Container,
   FormLabel,
-  Input,
+  Heading,
   VStack,
   Checkbox,
-  HStack,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
 } from "@hope-ui/solid"
-import { createSignal, onMount, Show } from "solid-js"
 import { useManageTitle, useRouter, useT, useFetch } from "~/hooks"
-import { handleResp, notify } from "~/utils"
-import { createACLRule, updateACLRule, getACLRule } from "~/utils/api"
-import { ACLRule, ACLPermission } from "~/types/acl"
+import { handleResp, notify, r } from "~/utils"
+import { ACLRule, ACLPermission, PResp } from "~/types"
+import { createStore } from "solid-js/store"
+import { Item, ACLItemType } from "./Item"
+import { ResponsiveGrid } from "../common/ResponsiveGrid"
+import { MaybeLoading } from "~/components"
+
+const ACL_PERMISSIONS = [
+  { key: ACLPermission.Read, name: "read" },
+  { key: ACLPermission.Write, name: "write" },
+  { key: ACLPermission.Delete, name: "delete" },
+  { key: ACLPermission.Manage, name: "manage" },
+  { key: ACLPermission.Share, name: "share" },
+  { key: ACLPermission.Download, name: "download" },
+] as const
 
 const AddOrEditACL = () => {
   const t = useT()
-  const { searchParams, back } = useRouter()
-  const id = Number(searchParams.id)
-  const isEdit = !isNaN(id)
-  useManageTitle(`manage.sidemenu.${isEdit ? "edit" : "add"}_acl`)
+  const { params, back } = useRouter()
+  const { id } = params
+  useManageTitle(`manage.sidemenu.${id ? "edit" : "add"}_acl`)
 
-  const [role, setRole] = createSignal("")
-  const [path, setPath] = createSignal("/")
-  const [priority, setPriority] = createSignal(0)
-  const [permissions, setPermissions] = createSignal(0)
+  const [ruleLoading, loadRule] = useFetch(
+    (): PResp<ACLRule> => r.get(`/admin/acl/get?id=${id}`),
+    true,
+  )
+
+  const [rule, setRule] = createStore<ACLRule>({
+    role: "",
+    path: "/",
+    priority: 0,
+    permissions: 0,
+  } as ACLRule)
+
+  const initEdit = async () => {
+    const resp = await loadRule()
+    handleResp(resp, (data) => {
+      setRule(data)
+    })
+  }
+
+  if (id) {
+    initEdit()
+  }
 
   const togglePermission = (perm: ACLPermission) => {
-    setPermissions((prev) => prev ^ perm)
+    setRule("permissions", (prev: number) => prev ^ perm)
   }
 
   const hasPermission = (perm: ACLPermission) => {
-    return (permissions() & perm) !== 0
+    return (rule.permissions & perm) !== 0
   }
 
-  const [loadLoading, loadRule] = useFetch(getACLRule)
-
-  onMount(async () => {
-    if (isEdit) {
-      const resp = await loadRule(id)
-      handleResp(resp, (rule: ACLRule) => {
-        setRole(rule.role)
-        setPath(rule.path)
-        setPriority(rule.priority)
-        setPermissions(rule.permissions)
-      })
-    }
+  const [saveLoading, saveReq] = useFetch((): PResp<{ id: number }> => {
+    return r.post(`/admin/acl/${id ? "update" : "create"}`, rule)
   })
 
-  const [saveLoading, saveReq] = useFetch(
-    isEdit ? updateACLRule : createACLRule,
-  )
-
   const save = async () => {
-    if (!role().trim()) {
-      notify.error(t("acl.role_required"))
-      return
-    }
-    if (!path().trim()) {
-      notify.error(t("acl.path_required"))
-      return
-    }
-
-    const ruleData: any = {
-      role: role().trim(),
-      path: path().trim(),
-      permissions: permissions(),
-      priority: priority(),
-    }
-
-    if (isEdit) {
-      ruleData.id = id
-    }
-
-    const resp = await saveReq(ruleData)
+    const resp = await saveReq()
     handleResp(resp, () => {
       notify.success(t("global.save_success"))
       back()
@@ -85,93 +73,57 @@ const AddOrEditACL = () => {
   }
 
   return (
-    <VStack spacing="$4" alignItems="start" w="$full" maxW="$lg">
-      <FormControl required>
-        <FormLabel>{t("acl.role")}</FormLabel>
-        <Input
-          value={role()}
-          onInput={(e) => setRole(e.currentTarget.value)}
+    <MaybeLoading loading={id ? ruleLoading() : false}>
+      <Heading mb="$2">{t(`global.${id ? "edit" : "add"}`)}</Heading>
+      <ResponsiveGrid>
+        <Item
+          name="role"
+          type={ACLItemType.String}
+          required
+          value={rule.role}
           placeholder="e.g., admin, editor, viewer"
+          onChange={(value) => setRule("role", value)}
         />
-      </FormControl>
-
-      <FormControl required>
-        <FormLabel>{t("acl.path")}</FormLabel>
-        <Input
-          value={path()}
-          onInput={(e) => setPath(e.currentTarget.value)}
+        <Item
+          name="path"
+          type={ACLItemType.String}
+          required
+          value={rule.path}
           placeholder="e.g., / or /folder/* or /folder/subfolder"
+          onChange={(value) => setRule("path", value)}
         />
-      </FormControl>
-
-      <FormControl>
-        <FormLabel>{t("acl.priority")}</FormLabel>
-        <NumberInput
-          value={priority()}
-          onChange={(value) => setPriority(Number(value))}
+        <Item
+          name="priority"
+          type={ACLItemType.Number}
+          value={rule.priority}
           min={0}
-        >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
+          onChange={(value) => setRule("priority", value)}
+        />
+      </ResponsiveGrid>
 
-      <FormControl>
+      <Container mt="$4" w="$full">
         <FormLabel>{t("acl.permissions")}</FormLabel>
         <VStack spacing="$2" alignItems="start">
-          <Checkbox
-            checked={hasPermission(ACLPermission.Read)}
-            onChange={() => togglePermission(ACLPermission.Read)}
-          >
-            {t("acl.permission.read")}
-          </Checkbox>
-          <Checkbox
-            checked={hasPermission(ACLPermission.Write)}
-            onChange={() => togglePermission(ACLPermission.Write)}
-          >
-            {t("acl.permission.write")}
-          </Checkbox>
-          <Checkbox
-            checked={hasPermission(ACLPermission.Delete)}
-            onChange={() => togglePermission(ACLPermission.Delete)}
-          >
-            {t("acl.permission.delete")}
-          </Checkbox>
-          <Checkbox
-            checked={hasPermission(ACLPermission.Manage)}
-            onChange={() => togglePermission(ACLPermission.Manage)}
-          >
-            {t("acl.permission.manage")}
-          </Checkbox>
-          <Checkbox
-            checked={hasPermission(ACLPermission.Share)}
-            onChange={() => togglePermission(ACLPermission.Share)}
-          >
-            {t("acl.permission.share")}
-          </Checkbox>
-          <Checkbox
-            checked={hasPermission(ACLPermission.Download)}
-            onChange={() => togglePermission(ACLPermission.Download)}
-          >
-            {t("acl.permission.download")}
-          </Checkbox>
+          {ACL_PERMISSIONS.map(({ key, name }) => (
+            <Checkbox
+              checked={hasPermission(key)}
+              onChange={[togglePermission, key]}
+            >
+              {t(`acl.permission.${name}`)}
+            </Checkbox>
+          ))}
         </VStack>
-      </FormControl>
+      </Container>
 
-      <HStack spacing="$2">
-        <Button
-          onClick={save}
-          loading={saveLoading() || loadLoading()}
-          colorScheme="accent"
-        >
-          {t("global.save")}
-        </Button>
-        <Button onClick={back}>{t("global.cancel")}</Button>
-      </HStack>
-    </VStack>
+      <Button
+        mt="$2"
+        loading={saveLoading()}
+        onClick={save}
+        colorScheme="accent"
+      >
+        {t(`global.${id ? "save" : "add"}`)}
+      </Button>
+    </MaybeLoading>
   )
 }
 
