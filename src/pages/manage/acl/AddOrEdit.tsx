@@ -13,6 +13,7 @@ import { createStore } from "solid-js/store"
 import { Item, ACLItemType } from "./Item"
 import { ResponsiveGrid } from "../common/ResponsiveGrid"
 import { MaybeLoading } from "~/components"
+import { onMount } from "solid-js"
 
 const ACL_PERMISSIONS = [
   { key: ACLPermission.Read, name: "read" },
@@ -25,13 +26,12 @@ const ACL_PERMISSIONS = [
 
 const AddOrEditACL = () => {
   const t = useT()
-  const { params, back } = useRouter()
-  const { id } = params
+  const { searchParams, back } = useRouter()
+  const id = searchParams.id ? Number(searchParams.id) : undefined
   useManageTitle(`manage.sidemenu.${id ? "edit" : "add"}_acl`)
 
   const [ruleLoading, loadRule] = useFetch(
     (): PResp<ACLRule> => r.get(`/admin/acl/get?id=${id}`),
-    true,
   )
 
   const [rule, setRule] = createStore<ACLRule>({
@@ -41,16 +41,14 @@ const AddOrEditACL = () => {
     permissions: 0,
   } as ACLRule)
 
-  const initEdit = async () => {
-    const resp = await loadRule()
-    handleResp(resp, (data) => {
-      setRule(data)
-    })
-  }
-
-  if (id) {
-    initEdit()
-  }
+  onMount(async () => {
+    if (id) {
+      const resp = await loadRule()
+      handleResp(resp, (data) => {
+        setRule(data)
+      })
+    }
+  })
 
   const togglePermission = (perm: ACLPermission) => {
     setRule("permissions", (prev: number) => prev ^ perm)
