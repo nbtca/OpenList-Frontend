@@ -15,7 +15,15 @@ import {
 } from "@hope-ui/solid"
 import { changeColor } from "seemly"
 import { Show, createMemo } from "solid-js"
-import { getMainColor, getSetting, getSettingBool, local, objStore, State, me } from "~/store"
+import {
+  getMainColor,
+  getSetting,
+  getSettingBool,
+  local,
+  objStore,
+  State,
+  me,
+} from "~/store"
 import { BsSearch } from "solid-icons/bs"
 import { CenterLoading } from "~/components"
 import { Container } from "../Container"
@@ -44,7 +52,15 @@ export const Header = () => {
 
   const userAvatar = createMemo(() => {
     const currentUser = me()
-    if (ssoEnabled && !UserMethods.is_guest(currentUser) && currentUser.sso_id) {
+    if (
+      ssoEnabled &&
+      !UserMethods.is_guest(currentUser) &&
+      currentUser.sso_id
+    ) {
+      // Use avatar from backend if available, otherwise fallback to ui-avatars
+      if (currentUser.avatar) {
+        return currentUser.avatar
+      }
       return `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.username)}&background=random`
     }
     return null
