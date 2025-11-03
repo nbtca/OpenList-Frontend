@@ -11,6 +11,7 @@ import {
   VStack,
   Checkbox,
   Icon,
+  Box,
 } from "@hope-ui/solid"
 import { createMemo, createSignal, Show, onMount, onCleanup } from "solid-js"
 import { SwitchColorMode, SwitchLanguageWhite } from "~/components"
@@ -336,7 +337,9 @@ const Login = () => {
                 onClick={() => {
                   changeToken()
                   to(
-                    decodeURIComponent(searchParams.redirect || base_path || "/"),
+                    decodeURIComponent(
+                      searchParams.redirect || base_path || "/",
+                    ),
                     true,
                   )
                 }}
@@ -366,30 +369,39 @@ const Login = () => {
           }
         >
           <SSOLogin showAsButton />
-          <Text
-            fontSize="$sm"
-            color="$neutral10"
-            textAlign="center"
+          <Button
             w="$full"
-            mt="$2"
+            colorScheme="accent"
+            onClick={() => {
+              changeToken()
+              to(
+                decodeURIComponent(searchParams.redirect || base_path || "/"),
+                true,
+              )
+            }}
           >
-            ──────
-          </Text>
+            {t("login.use_guest")}
+          </Button>
+          <Box w="$full" h="1px" bg="$neutral10" my="$2" borderRadius="$full" />
+
           <VStack w="$full" spacing="$2">
-            <Show when={!needOpt()} fallback={
-              <Input
-                id="totp"
-                name="otp"
-                placeholder={t("login.otp-tips")}
-                value={opt()}
-                onInput={(e) => setOpt(e.currentTarget.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    Login()
-                  }
-                }}
-              />
-            }>
+            <Show
+              when={!needOpt()}
+              fallback={
+                <Input
+                  id="totp"
+                  name="otp"
+                  placeholder={t("login.otp-tips")}
+                  value={opt()}
+                  onInput={(e) => setOpt(e.currentTarget.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      Login()
+                    }
+                  }}
+                />
+              }
+            >
               <Input
                 name="username"
                 placeholder={t("login.username-tips")}
@@ -429,7 +441,7 @@ const Login = () => {
                 </Button>
               </Show>
               <Button w="$full" loading={loading()} onClick={Login}>
-                {t("login.admin_login", "Admin Login")}
+                {t("login.login", "Login")}
               </Button>
             </HStack>
           </VStack>

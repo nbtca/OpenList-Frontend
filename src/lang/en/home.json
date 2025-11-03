@@ -198,7 +198,8 @@
   },
   "footer": {
     "powered_by": "Powered by OpenList",
-    "manage": "Manage"
+    "manage": "Manage",
+    "logout": "Logout"
   },
   "search": {
     "search": "Search",

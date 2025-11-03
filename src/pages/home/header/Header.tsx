@@ -27,12 +27,13 @@ import {
 import { BsSearch } from "solid-icons/bs"
 import { CenterLoading } from "~/components"
 import { Container } from "../Container"
-import { bus } from "~/utils"
+import { bus, changeToken, handleResp, notify, r } from "~/utils"
 import { Layout } from "./layout"
 import { isMac } from "~/utils/compatibility"
-import { UserMethods } from "~/types"
-import { useRouter, useT } from "~/hooks"
+import { UserMethods, PResp } from "~/types"
+import { useFetch, useRouter, useT } from "~/hooks"
 import { AiOutlineUser, AiOutlineLogin } from "solid-icons/ai"
+import { IoExit, IoSettings } from "solid-icons/io"
 
 export const Header = () => {
   const logos = getSetting("logo").split("\n")
@@ -40,6 +41,19 @@ export const Header = () => {
   const t = useT()
   const { to } = useRouter()
   const ssoEnabled = getSettingBool("sso_login_enabled")
+
+  const [logOutReqLoading, logOutReq] = useFetch(
+    (): PResp<any> => r.get("/auth/logout"),
+  )
+
+  const logOut = async () => {
+    console.log("test")
+    handleResp(await logOutReq(), () => {
+      changeToken()
+      notify.success(t("manage.logout_success"))
+      to("/@login")
+    })
+  }
 
   const stickyProps = createMemo<CenterProps>(() => {
     switch (local["position_of_header_navbar"]) {
@@ -52,6 +66,8 @@ export const Header = () => {
 
   const userAvatar = createMemo(() => {
     const currentUser = me()
+    console.log("cu", currentUser)
+
     if (
       ssoEnabled &&
       !UserMethods.is_guest(currentUser) &&
@@ -140,8 +156,26 @@ export const Header = () => {
                   icon={<AiOutlineUser />}
                 />
                 <MenuContent>
-                  <MenuItem onClick={() => to("/@manage")}>
-                    {t("home.footer.manage")}
+                  <MenuItem
+                    icon={<AiOutlineUser />}
+                    on:click={() => to("/@manage/profile")}
+                  >
+                    {t("manage.sidemenu.profile")}
+                  </MenuItem>
+                  <Show when={UserMethods.is_admin(me())}>
+                    <MenuItem
+                      icon={<IoSettings />}
+                      onclick={() => to("/@manage")}
+                    >
+                      {t("home.footer.manage")}
+                    </MenuItem>
+                  </Show>
+                  <MenuItem
+                    icon={<IoExit />}
+                    onclick={logOut}
+                    closeOnSelect={false}
+                  >
+                    {t("home.footer.logout")}
                   </MenuItem>
                 </MenuContent>
               </Menu>
