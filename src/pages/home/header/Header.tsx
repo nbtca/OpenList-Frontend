@@ -47,7 +47,6 @@ export const Header = () => {
   )
 
   const logOut = async () => {
-    console.log("test")
     handleResp(await logOutReq(), () => {
       changeToken()
       notify.success(t("manage.logout_success"))
@@ -158,14 +157,14 @@ export const Header = () => {
                 <MenuContent>
                   <MenuItem
                     icon={<AiOutlineUser />}
-                    on:click={() => to("/@manage/profile")}
+                    on:click={() => to("/@manage")}
                   >
                     {t("manage.sidemenu.profile")}
                   </MenuItem>
                   <Show when={UserMethods.is_admin(me())}>
                     <MenuItem
                       icon={<IoSettings />}
-                      onclick={() => to("/@manage")}
+                      onclick={() => to("/@manage/storages")}
                     >
                       {t("home.footer.manage")}
                     </MenuItem>
