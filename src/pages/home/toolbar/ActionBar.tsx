@@ -111,8 +111,33 @@ export const ActionBar = () => {
           onScroll={handleScroll}
         >
           <HStack spacing="$2" flexWrap="nowrap" minW="max-content">
+            <IconButton
+              aria-label={t("home.toolbar.toggle_checkbox")}
+              icon={<TbCheckbox />}
+              size="sm"
+              onClick={toggleCheckbox}
+            />
+            <IconButton
+              aria-label={t("home.toolbar.refresh")}
+              icon={<RiSystemRefreshLine />}
+              size="sm"
+              onClick={() => refresh(undefined, true)}
+            />
             <Show when={checkboxOpen() && haveSelected()}>
-              <Box borderRight="1px solid" borderColor="$neutral3" pr="$2">
+              <Button
+                size="sm"
+                variant="subtle"
+                onClick={() => selectAll(false)}
+              >
+                {t("home.toolbar.cancel_select")}
+              </Button>
+              <Box
+                borderRight="1px solid"
+                borderLeft="1px solid"
+                borderColor="$neutral3"
+                pr="$1"
+                pl="$1"
+              >
                 <HStack spacing="$2">
                   <Show when={!isShare()}>
                     <For
@@ -135,22 +160,9 @@ export const ActionBar = () => {
                   </Show>
                   <CopyLink />
                   <Download />
-                  <Button
-                    size="sm"
-                    variant="subtle"
-                    onClick={() => selectAll(false)}
-                  >
-                    {t("home.toolbar.cancel_select")}
-                  </Button>
                 </HStack>
               </Box>
             </Show>
-            <IconButton
-              aria-label={t("home.toolbar.refresh")}
-              icon={<RiSystemRefreshLine />}
-              size="sm"
-              onClick={() => refresh(undefined, true)}
-            />
 
             <Show when={!isShare() && (userCan("write") || objStore.write)}>
               <Button
@@ -209,13 +221,6 @@ export const ActionBar = () => {
                 onClick={() => bus.emit("tool", "offline_download")}
               />
             </Show>
-
-            <IconButton
-              aria-label={t("home.toolbar.toggle_checkbox")}
-              icon={<TbCheckbox />}
-              size="sm"
-              onClick={toggleCheckbox}
-            />
 
             <Show when={isTocVisible()}>
               <IconButton
