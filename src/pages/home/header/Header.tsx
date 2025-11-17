@@ -174,7 +174,7 @@ export const Header = () => {
                     onclick={logOut}
                     closeOnSelect={false}
                   >
-                    {t("home.footer.logout")}
+                    {t("acl.home.logout")}
                   </MenuItem>
                 </MenuContent>
               </Menu>

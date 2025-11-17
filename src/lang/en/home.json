@@ -176,8 +176,7 @@
   },
   "footer": {
     "powered_by": "Powered by OpenList",
-    "manage": "Manage",
-    "logout": "Logout"
+    "manage": "Manage"
   },
   "search": {
     "search": "Search",

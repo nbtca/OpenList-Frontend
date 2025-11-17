@@ -189,7 +189,7 @@ export const side_menu_items: SideMenuItem[] = [
     component: lazy(() => import("./metas/Metas")),
   },
   {
-    title: "manage.sidemenu.acl",
+    title: "acl.manage.acl",
     icon: BsShieldLock,
     to: "/@manage/acl",
     component: lazy(() => import("./acl/ACL")),

@@ -18,5 +18,11 @@
     "priority_help": "优先级更高的规则会覆盖优先级更低的规则。默认值为 0。",
     "enable_acl": "启用 ACL",
     "acl_disabled_msg": "ACL 功能当前已禁用。启用后可配置访问控制规则。",
-    "acl_description": "访问控制列表 (ACL) 允许你为不同路径配置基于角色的权限。此功能需要 OIDC 身份验证。"
+    "acl_description": "访问控制列表 (ACL) 允许你为不同路径配置基于角色的权限。此功能需要 OIDC 身份验证。",
+    "home": {
+        "logout": "登出"
+    },
+    "manage": {
+        "acl": "权限控制"
+    }
 }

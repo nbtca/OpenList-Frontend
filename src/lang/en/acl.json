@@ -18,5 +18,11 @@
   "priority_help": "Higher priority rules override lower priority rules. Default is 0.",
   "enable_acl": "Enable ACL",
   "acl_disabled_msg": "ACL feature is currently disabled. Enable it to configure access control rules.",
-  "acl_description": "Access Control List (ACL) allows you to configure role-based permissions for different paths. This feature requires OIDC authentication."
+  "acl_description": "Access Control List (ACL) allows you to configure role-based permissions for different paths. This feature requires OIDC authentication.",
+  "home": {
+    "logout": "Logout"
+  },
+  "manage": {
+    "acl": "Access Control"
+  }
 }

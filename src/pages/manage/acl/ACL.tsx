@@ -65,7 +65,7 @@ const PermissionBadges = (props: { permissions: number }) => {
 
 const ACL = () => {
   const t = useT()
-  useManageTitle("manage.sidemenu.acl")
+  useManageTitle("acl.manage.acl")
   const { to } = useRouter()
   const [loading, loadRules] = useFetch(getACLRules)
   const [rules, setRules] = createSignal<ACLRule[]>([])
