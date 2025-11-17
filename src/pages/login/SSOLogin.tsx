@@ -55,7 +55,7 @@ const SSOLogin = (props?: { showAsButton?: boolean }) => {
       default:
         icon = FiLogIn
     }
-    
+
     if (props?.showAsButton) {
       return (
         <Button
@@ -64,11 +64,11 @@ const SSOLogin = (props?: { showAsButton?: boolean }) => {
           leftIcon={<Icon as={icon} />}
           onClick={login}
         >
-          {t("login.sso_login", `Login with ${loginPlatform}`)}
+          {t("acl.login.sso_login", `Login with ${loginPlatform}`)}
         </Button>
       )
     }
-    
+
     return (
       <Icon cursor="pointer" boxSize="$8" as={icon} p="$0_5" onclick={login} />
     )
