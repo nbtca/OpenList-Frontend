@@ -159,12 +159,74 @@ build_project() {
 # Fetch i18n files from release if skip-i18n flag is set
 fetch_i18n_from_release() {
     log_warning "Skipping i18n build step, try to fetch from GitHub release"
-    release_response=$(curl -s "https://api.github.com/repos/OpenListTeam/OpenList-Frontend/releases/tags/$git_version")
+    local release_tag="${git_version:-}"
+    local attempted_latest="false"
+
+    if should_use_latest_release_tag "$release_tag"; then
+        log_info "git_version is missing or placeholder, fetching latest release tag from GitHub..."
+        if ! release_tag=$(fetch_latest_release_tag); then
+            log_warning "Failed to determine latest release tag. Skipping i18n fetch."
+            return
+        fi
+        log_info "Using release tag $release_tag for i18n assets."
+        attempted_latest="true"
+    fi
+
+    release_response=$(fetch_release_by_tag "$release_tag")
     if echo -n "$release_response" | grep -q "Not Found"; then
-        log_warning "Failed to fetch release info. Skipping i18n fetch."
+        if [[ "$attempted_latest" == "false" ]]; then
+            log_warning "Release tag $release_tag not found. Trying latest release from GitHub..."
+            if ! release_tag=$(fetch_latest_release_tag); then
+                log_warning "Failed to determine latest release tag. Skipping i18n fetch."
+                return
+            fi
+            release_response=$(fetch_release_by_tag "$release_tag")
+            attempted_latest="true"
+        fi
+    fi
+
+    if echo -n "$release_response" | grep -q "Not Found" || [[ -z "$release_response" ]]; then
+        log_warning "Failed to fetch release info for tag $release_tag. Skipping i18n fetch."
     else
         extract_i18n_tarball "$release_response"
     fi
+}
+
+# Determine if the git tag is missing or a placeholder
+should_use_latest_release_tag() {
+    local tag="$1"
+    if [[ -z "$tag" || "$tag" == "v0.0.0" || "$tag" == "0.0.0" ]]; then
+        return 0
+    fi
+    return 1
+}
+
+# Fetch release metadata for a specific tag
+fetch_release_by_tag() {
+    local tag="$1"
+    curl -s "https://api.github.com/repos/OpenListTeam/OpenList-Frontend/releases/tags/$tag"
+}
+
+# Fetch the latest release tag from GitHub
+fetch_latest_release_tag() {
+    local latest_response latest_tag
+    latest_response=$(curl -s "https://api.github.com/repos/OpenListTeam/OpenList-Frontend/releases/latest")
+
+    if [[ -z "$latest_response" ]]; then
+        return 1
+    fi
+
+    if echo -n "$latest_response" | grep -q "Not Found"; then
+        return 1
+    fi
+
+    latest_tag=$(echo "$latest_response" | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p' | head -n 1)
+
+    if [[ -z "$latest_tag" ]]; then
+        return 1
+    fi
+
+    echo "$latest_tag"
 }
 
 # Extract i18n tarball
