@@ -19,6 +19,7 @@ export type FsListResp = Resp<{
   write: boolean
   provider: string
   permissions: number // ACL permissions bitmask
+  direct_upload_tools?: string[]
 }>
 
 export type SearchNode = {
