@@ -1,0 +1,22 @@
+{
+    "role": "角色",
+    "path": "路径",
+    "permissions": "权限",
+    "priority": "优先级",
+    "no_rules": "尚未配置任何 ACL 规则",
+    "role_required": "角色为必填项",
+    "path_required": "路径为必填项",
+    "permission": {
+        "read": "读取/列出 - 查看并列出文件和目录",
+        "write": "写入/上传 - 创建并上传文件",
+        "delete": "删除 - 移除文件和目录",
+        "manage": "管理 - 重命名、移动和复制文件",
+        "share": "共享 - 创建文件共享",
+        "download": "下载 - 下载文件"
+    },
+    "path_help": "使用 '/' 表示根目录，'/folder' 表示指定文件夹，或 '/folder/*' 表示该文件夹及其所有子文件夹",
+    "priority_help": "优先级更高的规则会覆盖优先级更低的规则。默认值为 0。",
+    "enable_acl": "启用 ACL",
+    "acl_disabled_msg": "ACL 功能当前已禁用。启用后可配置访问控制规则。",
+    "acl_description": "访问控制列表 (ACL) 允许你为不同路径配置基于角色的权限。此功能需要 OIDC 身份验证。"
+}

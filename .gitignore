@@ -1,7 +1,10 @@
 node_modules
 dist
 /src/lang/*
+/src/lang/zh/*
 !/src/lang/en/
+!/src/lang/zh
+!/src/lang/zh/acl.json
 .DS_Store
 .idea
 .test
