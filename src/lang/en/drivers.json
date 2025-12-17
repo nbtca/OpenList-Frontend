@@ -109,6 +109,9 @@
     "cloud_id": "Cloud id",
     "custom_upload_part_size": "Custom upload part size",
     "custom_upload_part_size-tips": "0 for auto",
+    "mail_cookies": "Mail cookies",
+    "mail_cookies-tips": "Cookies from mail.139.com used for login authentication.",
+    "password": "Password",
     "report_real_size": "Report real size",
     "report_real_size-tips": "Enable to report the real file size during upload",
     "root_folder_id": "Root folder id",
@@ -122,7 +125,8 @@
     "use_large_thumbnail": "Use large thumbnail",
     "use_large_thumbnail-tips": "Enable to use large thumbnail for images",
     "user_domain_id": "User domain id",
-    "user_domain_id-tips": "ud_id in Cookie, fill in to show disk usage"
+    "user_domain_id-tips": "ud_id in Cookie, fill in to show disk usage",
+    "username": "Username"
   },
   "189Cloud": {
     "cookie": "Cookie",
@@ -195,6 +199,17 @@
     },
     "upload_thread": "Upload thread",
     "upload_thread-tips": "1\u003c=thread\u003c=32"
+  },
+  "AList V3": {
+    "forward_archive_requests": "Forward archive requests",
+    "meta_password": "Meta password",
+    "pass_ip_to_upsteam": "Pass ip to upsteam",
+    "pass_ua_to_upsteam": "Pass ua to upsteam",
+    "password": "Password",
+    "root_folder_path": "Root folder path",
+    "token": "Token",
+    "url": "Url",
+    "username": "Username"
   },
   "Alias": {
     "details_pass_through": "Details pass through",
@@ -299,6 +314,7 @@
     "container_name-tips": "The name of the container in Azure Storage (created in the Azure portal). https://learn.microsoft.com/azure/storage/blobs/blob-containers-portal",
     "endpoint": "Endpoint",
     "endpoint-tips": "e.g. https://accountname.blob.core.windows.net/. The full endpoint URL for Azure Storage, including the unique storage account name (3 ~ 24 numbers and lowercase letters only).",
+    "root_folder_path": "Root folder path",
     "sign_url_expire": "Sign url expire",
     "sign_url_expire-tips": "The expiration time for SAS URLs, in hours."
   },
@@ -333,6 +349,8 @@
     "upload_api": "Upload api",
     "upload_thread": "Upload thread",
     "upload_thread-tips": "1\u003c=thread\u003c=32",
+    "upload_timeout": "Upload timeout",
+    "upload_timeout-tips": "per-slice upload timeout in seconds",
     "use_dynamic_upload_api": "Use dynamic upload api",
     "use_dynamic_upload_api-tips": "dynamically get upload api domain, when enabled, the 'Upload API' setting will be used as a fallback if failed to get",
     "use_online_api": "Use online api"
@@ -354,7 +372,7 @@
     "default_branch": "Default branch",
     "default_branch-tips": "Default branch for new releases",
     "repo": "Repo",
-    "root_folder_path": "Root folder path",
+    "root_folder_id": "Root folder id",
     "token": "Token",
     "use_tag_name": "Use tag name",
     "use_tag_name-tips": "Use tag name instead of release name"
@@ -572,7 +590,7 @@
     "gh_proxy-tips": "GitHub proxy, e.g. https://ghproxy.net/github.com or https://gh-proxy.com/github.com ",
     "repo_structure": "Repo structure",
     "repo_structure-tips": "structure:[path:]org/repo",
-    "root_folder_id": "Root folder id",
+    "root_folder_path": "Root folder path",
     "show_all_version": "Show all version",
     "show_all_version-tips": "show all versions",
     "show_readme": "Show readme",
@@ -703,7 +721,7 @@
   "MediaFire": {
     "chunk_size": "Chunk size",
     "cookie": "Cookie",
-    "cookie-tips": "Required for navigation",
+    "cookie-tips": "Required for MediaFire API authentication",
     "limit_rate": "Limit rate",
     "limit_rate-tips": "limit all api request rate ([limit]r/1s)",
     "order_by": "Order by",
@@ -719,7 +737,7 @@
     },
     "root_folder_path": "Root folder path",
     "session_token": "Session token",
-    "session_token-tips": "Required for MediaFire API",
+    "session_token-tips": "Optional for MediaFire API, can be auto-acquired from cookie",
     "upload_threads": "Upload threads",
     "upload_threads-tips": "concurrent upload threads"
   },
@@ -995,6 +1013,10 @@
     "username": "Username"
   },
   "Strm": {
+    "KeepLocalDownloadFile": "KeepLocalDownloadFile",
+    "KeepLocalDownloadFile-tips": "keep local download files",
+    "PathPrefix": "PathPrefix",
+    "PathPrefix-tips": "Path prefix",
     "SaveStrmLocalPath": "SaveStrmLocalPath",
     "SaveStrmLocalPath-tips": "save strm file local path",
     "SaveStrmToLocal": "SaveStrmToLocal",
@@ -1283,6 +1305,15 @@
     "num_folder": "Num folder",
     "root_folder_path": "Root folder path"
   },
+  "WPS": {
+    "cookie": "Cookie",
+    "mode": "Mode",
+    "modes": {
+      "Business": "Business",
+      "Personal": "Personal"
+    },
+    "root_folder_path": "Root folder path"
+  },
   "WebDav": {
     "address": "Address",
     "password": "Password",
@@ -1363,6 +1394,7 @@
     },
     "189CloudPC": {},
     "189CloudTV": {},
+    "AList V3": {},
     "Alias": {},
     "Aliyundrive": {
       "alert": "There may be an infinite loop bug in this driver.\nDeprecated, no longer maintained and will be removed in a future version.\nWe recommend using the official driver AliyundriveOpen."
@@ -1436,6 +1468,7 @@
     "USS": {},
     "UrlTree": {},
     "Virtual": {},
+    "WPS": {},
     "WebDav": {},
     "WeiYun": {},
     "WoPan": {},
@@ -1453,6 +1486,7 @@
     "189Cloud": "189Cloud",
     "189CloudPC": "189CloudPC",
     "189CloudTV": "189CloudTV",
+    "AList V3": "AList V3",
     "Alias": "Alias",
     "Aliyundrive": "Aliyundrive",
     "AliyundriveOpen": "AliyundriveOpen",
@@ -1522,6 +1556,7 @@
     "USS": "USS",
     "UrlTree": "UrlTree",
     "Virtual": "Virtual",
+    "WPS": "WPS",
     "WebDav": "WebDav",
     "WeiYun": "WeiYun",
     "WoPan": "WoPan",

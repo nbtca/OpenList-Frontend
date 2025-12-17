@@ -18,16 +18,16 @@ importers:
         specifier: 0.6.7
         version: 0.6.7(@stitches/core@1.2.8)(solid-js@1.9.10)(solid-transition-group@0.3.0(solid-js@1.9.10))
       '@monaco-editor/loader':
-        specifier: ^1.5.0
-        version: 1.6.1
+        specifier: 1.7.0
+        version: 1.7.0
       '@ruffle-rs/ruffle':
-        specifier: 0.2.0-nightly.2025.8.3
-        version: 0.2.0-nightly.2025.8.3
+        specifier: 0.2.0-nightly.2025.12.15
+        version: 0.2.0-nightly.2025.12.15
       '@solid-primitives/i18n':
         specifier: ^2.2.1
         version: 2.2.1(solid-js@1.9.10)
       '@solid-primitives/keyboard':
-        specifier: ^1.3.1
+        specifier: ^1.3.3
         version: 1.3.3(solid-js@1.9.10)
       '@solid-primitives/storage':
         specifier: ^1.3.11
@@ -48,22 +48,22 @@ importers:
         specifier: ^1.10.1
         version: 1.10.1
       artplayer:
-        specifier: ^5.2.3
+        specifier: ^5.3.0
         version: 5.3.0
       artplayer-plugin-danmuku:
-        specifier: ^5.1.6
+        specifier: ^5.2.0
         version: 5.2.0
       asciinema-player:
-        specifier: ^3.10.0
+        specifier: ^3.12.1
         version: 3.12.1
       axios:
-        specifier: ^1.9.0
+        specifier: ^1.13.2
         version: 1.13.2
       bencode:
         specifier: ^4.0.0
         version: 4.0.0
       chardet:
-        specifier: ^2.1.0
+        specifier: ^2.1.1
         version: 2.1.1
       clsx:
         specifier: ^2.1.1
@@ -84,8 +84,8 @@ importers:
         specifier: ^4.12.0
         version: 4.12.0
       hls.js:
-        specifier: ^1.6.5
-        version: 1.6.14
+        specifier: ^1.6.15
+        version: 1.6.15
       ini:
         specifier: ^6.0.0
         version: 6.0.0
@@ -102,7 +102,7 @@ importers:
         specifier: ^1.19.8
         version: 1.19.8
       lightgallery:
-        specifier: ^2.8.3
+        specifier: ^2.9.0
         version: 2.9.0
       mark.js:
         specifier: ^8.11.1
@@ -111,8 +111,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       monaco-editor:
-        specifier: ^0.54.0
-        version: 0.54.0
+        specifier: 0.55.1
+        version: 0.55.1
       mpegts.js:
         specifier: ^1.8.0
         version: 1.8.0
@@ -144,7 +144,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(solid-js@1.9.10)
       solid-js:
-        specifier: ^1.9.7
+        specifier: ^1.9.10
         version: 1.9.10
       solid-markdown:
         specifier: ^1.2.2
@@ -181,7 +181,7 @@ importers:
         specifier: ^22.0.0
         version: 22.19.0
       '@types/qrcode':
-        specifier: ^1.5.5
+        specifier: ^1.5.6
         version: 1.5.6
       '@types/sha256':
         specifier: ^0.2.2
@@ -193,37 +193,37 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1(terser@5.44.1)(vite@6.4.1(@types/node@22.19.0)(terser@5.44.1)(yaml@2.8.1))
       cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
+        specifier: ^10.1.0
+        version: 10.1.0
       husky:
-        specifier: ^9.0.0
+        specifier: ^9.1.7
         version: 9.1.7
       lint-staged:
-        specifier: ^16.0.0
-        version: 16.2.6
+        specifier: ^16.2.7
+        version: 16.2.7
       mermaid:
-        specifier: ^11.9.0
-        version: 11.12.1
+        specifier: ^11.12.2
+        version: 11.12.2
       prettier:
         specifier: 3.6.2
         version: 3.6.2
       terser:
-        specifier: ^5.43.1
+        specifier: ^5.44.1
         version: 5.44.1
       typescript:
-        specifier: ^5.8.3
+        specifier: ^5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.5
+        specifier: ^6.4.1
         version: 6.4.1(@types/node@22.19.0)(terser@5.44.1)(yaml@2.8.1)
       vite-plugin-dynamic-base:
-        specifier: ^1.0.0
+        specifier: ^1.2.0
         version: 1.2.0(vite@6.4.1(@types/node@22.19.0)(terser@5.44.1)(yaml@2.8.1))
       vite-plugin-solid:
-        specifier: ^2.11.7
+        specifier: ^2.11.10
         version: 2.11.10(solid-js@1.9.10)(vite@6.4.1(@types/node@22.19.0)(terser@5.44.1)(yaml@2.8.1))
       vite-plugin-static-copy:
-        specifier: ^3.1.1
+        specifier: ^3.1.4
         version: 3.1.4(vite@6.4.1(@types/node@22.19.0)(terser@5.44.1)(yaml@2.8.1))
 
 packages:
@@ -816,6 +816,9 @@ packages:
   '@egjs/view360@4.0.0-beta.7':
     resolution: {integrity: sha512-prVTTxuQ1/k59NM7G0tm58k2vPHGoaExoFr5E7MoJaSGF56Otj4okQHAxxosXH87aQLN0feZMtBlsKz0b/7zEw==}
 
+  '@epic-web/invariant@1.0.0':
+    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
+
   '@esbuild/aix-ppc64@0.25.11':
     resolution: {integrity: sha512-Xt1dOL13m8u0WE8iplx9Ibbm+hFAO0GsU2P34UNoDGvZYkY8ifSiy6Zuc1lYxfG7svWE2fzqCUmFp5HCn51gJg==}
     engines: {node: '>=18'}
@@ -1035,8 +1038,8 @@ packages:
   '@mermaid-js/parser@0.6.3':
     resolution: {integrity: sha512-lnjOhe7zyHjc+If7yT4zoedx2vo4sHaTmtkl1+or8BRTnCtDmcTpAjpzDSfCZrshM5bCoz0GyidzadJAH1xobA==}
 
-  '@monaco-editor/loader@1.6.1':
-    resolution: {integrity: sha512-w3tEnj9HYEC73wtjdpR089AqkUPskFRcdkxsiSFt3SoUc3OHpmu+leP94CXBm4mHfefmhsdfI0ZQu6qJ0wgtPg==}
+  '@monaco-editor/loader@1.7.0':
+    resolution: {integrity: sha512-gIwR1HrJrrx+vfyOhYmCZ0/JcWqG5kbfG7+d3f/C1LXk2EvzAbHSg3MQ5lO2sMlo9izoAZ04shohfKLVT6crVA==}
 
   '@motionone/animation@10.18.0':
     resolution: {integrity: sha512-9z2p5GFGCm0gBsZbi8rVMOAJCtw1WqBTIPw3ozk06gDvZInBPIsQcHgYogEJ4yuHJ+akuW8g1SEIOpTOvYs8hw==}
@@ -1166,8 +1169,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@ruffle-rs/ruffle@0.2.0-nightly.2025.8.3':
-    resolution: {integrity: sha512-3Xn0AEYt84bioRE4HQSALbB+5g/hP04j2P0eCB+fYFj06MGc+7AhlWFas9apE1S4UTJN3TR/WmRMVUGmeouspw==}
+  '@ruffle-rs/ruffle@0.2.0-nightly.2025.12.15':
+    resolution: {integrity: sha512-tTMaDxf2+zFl5mxdQrN7yltFxUyEMd044ALbg+eLbJnAkDacGZP3rw/iI54JU+veDtAcMw7ZRKBnPUXZEDmM9Q==}
 
   '@solid-primitives/event-listener@2.4.3':
     resolution: {integrity: sha512-h4VqkYFv6Gf+L7SQj+Y6puigL/5DIi7x5q07VZET7AWcS+9/G3WfIE9WheniHWJs51OEkRB43w6lDys5YeFceg==}
@@ -1769,9 +1772,9 @@ packages:
   cose-base@2.2.0:
     resolution: {integrity: sha512-AzlgcsCbUMymkADOJtQm3wO9S3ltPfYOFD5033keQn9NJzIbtnZj+UdBJe7DYml/8TdbtHJW3j58SOnKhWY/5g==}
 
-  cross-env@7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+  cross-env@10.1.0:
+    resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
+    engines: {node: '>=20'}
     hasBin: true
 
   cross-spawn@7.0.6:
@@ -2012,8 +2015,8 @@ packages:
     resolution: {integrity: sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==}
     engines: {node: '>= 4'}
 
-  dompurify@3.1.7:
-    resolution: {integrity: sha512-VaTstWtsneJY8xzy7DekmYWEOZcmzIe3Qb3zPd4STve1OBTa+e+WmS1ITQec1fZYXI3HCsOZZiSMpG6oxoWMWQ==}
+  dompurify@3.2.7:
+    resolution: {integrity: sha512-WhL/YuveyGXJaerVlMYGWhvQswa7myDG17P7Vu65EWC05o8vfeNbvNf4d/BOvH99+ZW+LlQsc1GDKMa1vNK6dw==}
 
   dompurify@3.3.0:
     resolution: {integrity: sha512-r+f6MYR1gGN1eJv0TVQbhA7if/U7P87cdPl3HN5rikqaBSBxLiCb/b9O+2eG0cxz0ghyU+mU1QkbsOwERMYlWQ==}
@@ -2245,8 +2248,8 @@ packages:
   hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
 
-  hls.js@1.6.14:
-    resolution: {integrity: sha512-CSpT2aXsv71HST8C5ETeVo+6YybqCpHBiYrCRQSn3U5QUZuLTSsvtq/bj+zuvjLVADeKxoebzo16OkH8m1+65Q==}
+  hls.js@1.6.15:
+    resolution: {integrity: sha512-E3a5VwgXimGHwpRGV+WxRTKeSp2DW5DI5MWv34ulL3t5UNmyJWCQ1KmLEHbYzcfThfXG8amBL+fCYPneGHC4VA==}
 
   html-entities@2.3.3:
     resolution: {integrity: sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==}
@@ -2403,8 +2406,8 @@ packages:
     resolution: {integrity: sha512-58Ud1DyhD2ao58t+kPEqSZrjFxg23tGd5ZKr75erm7q31g5xhUtWUJH3sTUkhHzlyJAKHj5eTrJ37HQRXG4Wbg==}
     engines: {node: '>=6.0.0'}
 
-  lint-staged@16.2.6:
-    resolution: {integrity: sha512-s1gphtDbV4bmW1eylXpVMk2u7is7YsrLl8hzrtvC70h4ByhcMLZFY01Fx05ZUDNuv1H8HO4E+e2zgejV1jVwNw==}
+  lint-staged@16.2.7:
+    resolution: {integrity: sha512-lDIj4RnYmK7/kXMya+qJsmkRFkGolciXjrsZ6PC25GdTfWOAWetR0ZbsNXRAj1EHHImRSalc+whZFg56F5DVow==}
     engines: {node: '>=20.17'}
     hasBin: true
 
@@ -2515,8 +2518,8 @@ packages:
     resolution: {integrity: sha512-eRtbOb1N5iyH0tkQDAoQ4Ipsp/5qSR79Dzrz8hEPxRX10RWWR/iQXdoKmBSRCThY1Fh5EhISDtpSc93fpxUniQ==}
     engines: {node: '>=12.13'}
 
-  mermaid@11.12.1:
-    resolution: {integrity: sha512-UlIZrRariB11TY1RtTgUWp65tphtBv4CSq7vyS2ZZ2TgoMjs2nloq+wFqxiwcxlhHUvs7DPGgMjs2aeQxz5h9g==}
+  mermaid@11.12.2:
+    resolution: {integrity: sha512-n34QPDPEKmaeCG4WDMGy0OT6PSyxKCfy2pJgShP+Qow2KLrvWjclwbc3yXfSIf4BanqWEhQEpngWwNp/XhZt6w==}
 
   micromark-core-commonmark@1.1.0:
     resolution: {integrity: sha512-BgHO1aRbolh2hcrzL2d1La37V0Aoz73ymF8rAcKnohLy93titmv62E0gP8Hrx9PKcKrqCZ1BbLGbP3bEhoXYlw==}
@@ -2656,8 +2659,8 @@ packages:
   mlly@1.8.0:
     resolution: {integrity: sha512-l8D9ODSRWLe2KHJSifWGwBqpTZXIXTeo8mlKjY+E2HAakaTeNpqAyBZ8GSqLzHgw4XmHmC8whvpjJNMbFZN7/g==}
 
-  monaco-editor@0.54.0:
-    resolution: {integrity: sha512-hx45SEUoLatgWxHKCmlLJH81xBo0uXP4sRkESUpmDQevfi+e7K1VuiSprK6UpQ8u4zOcKNiH0pMvHvlMWA/4cw==}
+  monaco-editor@0.55.1:
+    resolution: {integrity: sha512-jz4x+TJNFHwHtwuV9vA9rMujcZRb0CEilTEwG2rRSpe/A7Jdkuj8xPKttCgOh+v/lkHy7HsZ64oj+q3xoAFl9A==}
 
   mpegts.js@1.8.0:
     resolution: {integrity: sha512-ZtujqtmTjWgcDDkoOnLvrOKUTO/MKgLHM432zGDI8oPaJ0S+ebPxg1nEpDpLw6I7KmV/GZgUIrfbWi3qqEircg==}
@@ -3080,8 +3083,8 @@ packages:
   tabbable@5.3.3:
     resolution: {integrity: sha512-QD9qKY3StfbZqWOPLp0++pOrAVb/HbUi5xCc8cUo4XjP19808oaMiDzn0leBY5mCespIBM0CIZePzZjgzR83kA==}
 
-  tar@7.5.1:
-    resolution: {integrity: sha512-nlGpxf+hv0v7GkWBK2V9spgactGOp0qvfWRxUMjqHyzrt3SgwE48DIv/FhqPHJYLHpgW1opq3nERbz5Anq7n1g==}
+  tar@7.5.2:
+    resolution: {integrity: sha512-7NyxrTE4Anh8km8iEy7o0QYPs+0JKBTj5ZaqHg6B39erLg0qYXN3BijtShwbsNSvQ+LN75+KV+C4QR/f6Gwnpg==}
     engines: {node: '>=18'}
 
   terser@5.44.1:
@@ -4177,7 +4180,7 @@ snapshots:
       command-exists-promise: 2.0.2
       node-fetch: 2.7.0
       shelljs: 0.8.5
-      tar: 7.5.1
+      tar: 7.5.2
       yauzl: 3.2.0
     transitivePeerDependencies:
       - encoding
@@ -4195,6 +4198,8 @@ snapshots:
       '@egjs/imready': 1.4.2
       '@types/webxr': 0.5.22
       gl-matrix: 3.4.3
+
+  '@epic-web/invariant@1.0.0': {}
 
   '@esbuild/aix-ppc64@0.25.11':
     optional: true
@@ -4317,7 +4322,7 @@ snapshots:
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.4
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -4354,7 +4359,7 @@ snapshots:
     dependencies:
       langium: 3.3.1
 
-  '@monaco-editor/loader@1.6.1':
+  '@monaco-editor/loader@1.7.0':
     dependencies:
       state-local: 1.0.7
 
@@ -4459,7 +4464,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.52.5':
     optional: true
 
-  '@ruffle-rs/ruffle@0.2.0-nightly.2025.8.3': {}
+  '@ruffle-rs/ruffle@0.2.0-nightly.2025.12.15': {}
 
   '@solid-primitives/event-listener@2.4.3(solid-js@1.9.10)':
     dependencies:
@@ -4479,12 +4484,12 @@ snapshots:
 
   '@solid-primitives/props@3.2.1(solid-js@1.9.10)':
     dependencies:
-      '@solid-primitives/utils': 6.3.1(solid-js@1.9.10)
+      '@solid-primitives/utils': 6.3.2(solid-js@1.9.10)
       solid-js: 1.9.10
 
   '@solid-primitives/refs@1.1.1(solid-js@1.9.10)':
     dependencies:
-      '@solid-primitives/utils': 6.3.1(solid-js@1.9.10)
+      '@solid-primitives/utils': 6.3.2(solid-js@1.9.10)
       solid-js: 1.9.10
 
   '@solid-primitives/refs@1.1.2(solid-js@1.9.10)':
@@ -5066,8 +5071,9 @@ snapshots:
     dependencies:
       layout-base: 2.0.1
 
-  cross-env@7.0.3:
+  cross-env@10.1.0:
     dependencies:
+      '@epic-web/invariant': 1.0.0
       cross-spawn: 7.0.6
 
   cross-spawn@7.0.6:
@@ -5324,7 +5330,9 @@ snapshots:
     dependencies:
       domelementtype: 2.3.0
 
-  dompurify@3.1.7: {}
+  dompurify@3.2.7:
+    optionalDependencies:
+      '@types/trusted-types': 2.0.7
 
   dompurify@3.3.0:
     optionalDependencies:
@@ -5621,7 +5629,7 @@ snapshots:
 
   hey-listen@1.0.8: {}
 
-  hls.js@1.6.14: {}
+  hls.js@1.6.15: {}
 
   html-entities@2.3.3: {}
 
@@ -5735,7 +5743,7 @@ snapshots:
 
   lightgallery@2.9.0: {}
 
-  lint-staged@16.2.6:
+  lint-staged@16.2.7:
     dependencies:
       commander: 14.0.2
       listr2: 9.0.5
@@ -5927,7 +5935,7 @@ snapshots:
     dependencies:
       is-what: 4.1.16
 
-  mermaid@11.12.1:
+  mermaid@11.12.2:
     dependencies:
       '@braintree/sanitize-url': 7.1.1
       '@iconify/utils': 3.0.2
@@ -6204,9 +6212,9 @@ snapshots:
       pkg-types: 1.3.1
       ufo: 1.6.1
 
-  monaco-editor@0.54.0:
+  monaco-editor@0.55.1:
     dependencies:
-      dompurify: 3.1.7
+      dompurify: 3.2.7
       marked: 14.0.0
 
   mpegts.js@1.8.0:
@@ -6662,7 +6670,7 @@ snapshots:
 
   tabbable@5.3.3: {}
 
-  tar@7.5.1:
+  tar@7.5.2:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0

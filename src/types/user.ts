@@ -14,6 +14,7 @@ export interface User {
   sso_id: string
   disabled: boolean
   avatar: string
+  allow_ldap: boolean
   // otp: boolean;
 }
 

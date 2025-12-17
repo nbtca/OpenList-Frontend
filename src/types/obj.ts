@@ -19,12 +19,16 @@ export interface Obj {
   sign?: string
   thumb: string
   type: ObjType
-  path: string
   mount_details?: MountDetails
 }
 
 export type StoreObj = Obj & {
   selected?: boolean
+}
+
+export type ArchiveObj = Obj & {
+  inner_path?: string
+  archive?: Obj
 }
 
 export type RenameObj = {
