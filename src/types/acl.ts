@@ -1,6 +1,7 @@
 export interface ACLRule {
   id: number
   role: string
+  is_regex?: boolean
   path: string
   permissions: number
   priority: number

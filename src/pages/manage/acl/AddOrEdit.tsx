@@ -36,6 +36,7 @@ const AddOrEditACL = () => {
 
   const [rule, setRule] = createStore<ACLRule>({
     role: "",
+    is_regex: false,
     path: "/",
     priority: 0,
     permissions: 0,
@@ -97,6 +98,12 @@ const AddOrEditACL = () => {
           min={0}
           onChange={(value) => setRule("priority", value)}
         />
+        <Checkbox
+          checked={!!rule.is_regex}
+          onChange={() => setRule("is_regex", (v) => !v)}
+        >
+          {t(`acl.is_regex`)}
+        </Checkbox>
       </ResponsiveGrid>
 
       <Container mt="$4" w="$full">

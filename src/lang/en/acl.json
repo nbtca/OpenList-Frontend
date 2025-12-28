@@ -27,5 +27,6 @@
   },
   "login": {
     "sso_login": "Login with Single Sign-On"
-  }
+  },
+  "is_regex": "Match Path as Regular Expression"
 }
