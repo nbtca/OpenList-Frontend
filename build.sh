@@ -239,6 +239,7 @@ extract_i18n_tarball() {
         if curl -L -o "i18n.tar.gz" "$i18n_file_url"; then
             if tar -xzvf i18n.tar.gz -C src/lang; then
                 log_info "i18n files extracted to src/lang/"
+                cp src/lang/en/entry.ts src/lang/zh-CN/entry.ts
             else
                 log_warning "Failed to extract i18n.tar.gz"
             fi

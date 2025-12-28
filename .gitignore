@@ -3,8 +3,8 @@ dist
 /src/lang/*
 /src/lang/zh/*
 !/src/lang/en/
-!/src/lang/zh
-!/src/lang/zh/acl.json
+!/src/lang/zh-CN
+!/src/lang/zh-CN/acl.json
 .DS_Store
 .idea
 .test
