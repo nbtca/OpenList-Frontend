@@ -84,6 +84,12 @@ const AddOrEditACL = () => {
           placeholder="e.g., admin, editor, viewer"
           onChange={(value) => setRule("role", value)}
         />
+        <Checkbox
+          checked={!!rule.is_regex}
+          onChange={() => setRule("is_regex", (v) => !v)}
+        >
+          {t(`acl.is_regex`)}
+        </Checkbox>
         <Item
           name="path"
           type={ACLItemType.String}
@@ -92,6 +98,14 @@ const AddOrEditACL = () => {
           placeholder="e.g., / or /folder/subfolder"
           onChange={(value) => setRule("path", value)}
         />
+        <Checkbox
+          checked={!!rule.exclude_subfolder}
+          onChange={() => setRule("exclude_subfolder", (v) => !v)}
+        >
+          {t("acl.exclude_subfolder", {
+            default: "不包含子文件夹（不自动匹配../*）",
+          })}
+        </Checkbox>
         <Item
           name="priority"
           type={ACLItemType.Number}
@@ -99,20 +113,6 @@ const AddOrEditACL = () => {
           min={0}
           onChange={(value) => setRule("priority", value)}
         />
-        <Checkbox
-          checked={!!rule.is_regex}
-          onChange={() => setRule("is_regex", (v) => !v)}
-        >
-          {t(`acl.is_regex`)}
-        </Checkbox>
-        <Checkbox
-          checked={!!rule.exclude_subfolder}
-          onChange={() => setRule("exclude_subfolder", (v) => !v)}
-        >
-          {t("acl.exclude_subfolder", {
-            default: "不包含子文件夹（不自动匹配/*）",
-          })}
-        </Checkbox>
       </ResponsiveGrid>
 
       <Container mt="$4" w="$full">
