@@ -5,6 +5,7 @@ export interface ACLRule {
   path: string
   permissions: number
   priority: number
+  exclude_subfolder?: boolean
   created_at: string
   updated_at: string
 }

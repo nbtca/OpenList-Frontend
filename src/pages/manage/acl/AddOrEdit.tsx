@@ -40,6 +40,7 @@ const AddOrEditACL = () => {
     path: "/",
     priority: 0,
     permissions: 0,
+    exclude_subfolder: false,
   } as ACLRule)
 
   onMount(async () => {
@@ -88,7 +89,7 @@ const AddOrEditACL = () => {
           type={ACLItemType.String}
           required
           value={rule.path}
-          placeholder="e.g., / or /folder/* or /folder/subfolder"
+          placeholder="e.g., / or /folder/subfolder"
           onChange={(value) => setRule("path", value)}
         />
         <Item
@@ -103,6 +104,14 @@ const AddOrEditACL = () => {
           onChange={() => setRule("is_regex", (v) => !v)}
         >
           {t(`acl.is_regex`)}
+        </Checkbox>
+        <Checkbox
+          checked={!!rule.exclude_subfolder}
+          onChange={() => setRule("exclude_subfolder", (v) => !v)}
+        >
+          {t("acl.exclude_subfolder", {
+            default: "不包含子文件夹（不自动匹配/*）",
+          })}
         </Checkbox>
       </ResponsiveGrid>
 

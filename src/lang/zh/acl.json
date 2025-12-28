@@ -28,5 +28,6 @@
     "login": {
         "sso_login": "统一身份认证"
     },
-    "is_regex": "使用正则表达式匹配路径"
+    "is_regex": "使用正则表达式匹配路径",
+    "exclude_subfolder": "不包含子文件夹（不自动匹配/*）"
 }
