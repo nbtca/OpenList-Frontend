@@ -219,12 +219,38 @@
     "download_concurrency-tips": "Need to enable proxy",
     "download_part_size": "Download part size",
     "download_part_size-tips": "Need to enable proxy. Unit: KB",
-    "parallel_write": "Parallel write",
+    "file_consistency_check": "File consistency check",
     "paths": "Paths",
-    "protect_same_name": "Protect same name",
-    "protect_same_name-tips": "Protects same-name files from Delete or Rename",
     "provider_pass_through": "Provider pass through",
-    "writable": "Writable"
+    "put_conflict_policy": "Putting conflict policy",
+    "put_conflict_policy-tips": "How the driver handles identical backend paths when uploading, copying, moving, or decompressing.",
+    "put_conflict_policys": {
+      "all": "Put into all conflict paths",
+      "all_strict": "Allow full conflict paths",
+      "deterministic": "Allow unique path",
+      "deterministic_or_all": "Allow unique path and full conflict paths",
+      "disabled": "Disable putting",
+      "first": "Put into the first conflict path",
+      "quota": "Weighted random load balancing based on remaining space",
+      "quota_strict": "Strict weighted random load balancing based on remaining space",
+      "random": "Random load balancing"
+    },
+    "read_conflict_policy": "Reading conflict policy",
+    "read_conflict_policys": {
+      "all": "Load balancing on a per-part basis",
+      "first": "Get the file corresponding to the first conflict path",
+      "random": "Load balancing on a per-file basis"
+    },
+    "write_conflict_policy": "Writing conflict policy",
+    "write_conflict_policy-tips": "How the driver handles identical backend paths when renaming, removing, or making directories.",
+    "write_conflict_policys": {
+      "all": "Write into all conflict paths",
+      "all_strict": "Allow full conflict paths",
+      "deterministic": "Allow unique path",
+      "deterministic_or_all": "Allow unique path and full conflict paths",
+      "disabled": "Disable writing",
+      "first": "Write into the first conflict path"
+    }
   },
   "Aliyundrive": {
     "internal_upload": "Internal upload",
@@ -308,6 +334,16 @@
     "root_folder_id": "Root folder id",
     "share_id": "Share id",
     "share_pwd": "Share pwd"
+  },
+  "AutoIndex": {
+    "ignore_file_names": "Ignore file names",
+    "item_xpath": "Entry XPath",
+    "modified_time_format": "Modification date format",
+    "modified_time_format-tips": "Must be based on the time point Mon Jan 2 15:04:05 -0700 MST 2006",
+    "modified_xpath": "Modification time XPath",
+    "name_xpath": "File name XPath",
+    "size_xpath": "File size XPath",
+    "url": "URL"
   },
   "Azure Blob Storage": {
     "access_key": "Access key",
@@ -757,6 +793,8 @@
   },
   "Mega_nz": {
     "email": "Email",
+    "move_to_trash": "Move to trash",
+    "move_to_trash-tips": "move to trash when deleting files",
     "password": "Password",
     "two_fa_code": "Two fa code",
     "two_fa_code-tips": "2FA 6-digit code, filling in the 2FA code alone will not support reloading driver",
@@ -1071,6 +1109,8 @@
     "chunk_size-tips": "Chunk size in MiB",
     "cookie": "Cookie",
     "cookie-tips": "access_token=xxx",
+    "random_chunk_name": "Random chunk name",
+    "random_chunk_name-tips": "Random chunk name",
     "root_folder_path": "Root folder path",
     "upload_concurrency": "Upload concurrency",
     "upload_concurrency-tips": "Concurrency upload requests",
@@ -1411,6 +1451,7 @@
     },
     "AliyundriveOpen": {},
     "AliyundriveShare": {},
+    "AutoIndex": {},
     "Azure Blob Storage": {},
     "BaiduNetdisk": {},
     "BaiduPhoto": {},
@@ -1501,6 +1542,7 @@
     "Aliyundrive": "Aliyundrive",
     "AliyundriveOpen": "AliyundriveOpen",
     "AliyundriveShare": "AliyundriveShare",
+    "AutoIndex": "AutoIndex",
     "Azure Blob Storage": "Azure Blob Storage",
     "BaiduNetdisk": "BaiduNetdisk",
     "BaiduPhoto": "BaiduPhoto",
