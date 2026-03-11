@@ -5,9 +5,22 @@ import {
   FormLabel,
   Input,
   Switch as HopeSwitch,
+  HStack,
+  IconButton,
+  createDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  Button,
 } from "@hope-ui/solid"
-import { Match, Show, Switch } from "solid-js"
+import { Match, Show, Switch, createSignal } from "solid-js"
 import { useT } from "~/hooks"
+import { TbFolder, TbPlus } from "solid-icons/tb"
+import { EnhancedFolderTree } from "~/components/EnhancedFolderTree"
 
 export enum ACLItemType {
   String = "string",
@@ -43,6 +56,17 @@ export type ItemProps = {
 
 const Item = (props: ItemProps) => {
   const t = useT()
+  const { isOpen, onOpen, onClose } = createDisclosure()
+  const [selectedPath, setSelectedPath] = createSignal("/")
+
+  const addPath = () => {
+    let sp = selectedPath()
+    if (props.type === ACLItemType.String && props.onChange) {
+      props.onChange(sp)
+    }
+    onClose()
+  }
+
   return (
     <FormControl
       w="$full"
@@ -55,17 +79,57 @@ const Item = (props: ItemProps) => {
       </FormLabel>
       <Switch fallback={<Center>{t("settings.unknown_type")}</Center>}>
         <Match when={props.type === ACLItemType.String}>
-          <Input
-            id={props.name}
-            readOnly={props.readonly}
-            value={props.value as string}
-            placeholder={props.placeholder}
-            onInput={
-              props.type === ACLItemType.String
-                ? (e) => props.onChange?.(e.currentTarget.value)
-                : undefined
-            }
-          />
+          <HStack w="$full" spacing="$2">
+            <Input
+              id={props.name}
+              flex="1"
+              readOnly={props.readonly}
+              value={props.value as string}
+              placeholder={props.placeholder}
+              onInput={
+                props.type === ACLItemType.String
+                  ? (e) => props.onChange?.(e.currentTarget.value)
+                  : undefined
+              }
+            />
+            <Show when={props.name === "path"}>
+              <IconButton
+                colorScheme="accent"
+                aria-label={t("global.choose_or_input_path")}
+                icon={<TbFolder />}
+                onClick={onOpen}
+                disabled={props.readonly}
+              />
+            </Show>
+          </HStack>
+          <Show when={props.name === "path"}>
+            <Modal size="xl" opened={isOpen()} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalCloseButton />
+                <ModalHeader>{t("global.choose_or_input_path")}</ModalHeader>
+                <ModalBody>
+                  <EnhancedFolderTree
+                    forceRoot
+                    onChange={setSelectedPath}
+                    showHiddenFolder={true}
+                  />
+                </ModalBody>
+                <ModalFooter display="flex" gap="$2">
+                  <Button onClick={onClose} colorScheme="neutral">
+                    {t("global.cancel")}
+                  </Button>
+                  <Button
+                    onClick={addPath}
+                    colorScheme="primary"
+                    leftIcon={<TbPlus />}
+                  >
+                    {t("shares.add_path")}
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </Show>
         </Match>
         <Match when={props.type === ACLItemType.Number}>
           <Input
