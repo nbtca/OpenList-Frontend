@@ -1,4 +1,12 @@
-import { Anchor, Box, List, ListItem, useColorModeValue } from "@hope-ui/solid"
+import {
+  Anchor,
+  Box,
+  List,
+  ListItem,
+  useColorModeValue,
+  Icon,
+} from "@hope-ui/solid"
+import { FiEdit } from "solid-icons/fi"
 import { createStorageSignal } from "@solid-primitives/storage"
 import { clsx } from "clsx"
 import once from "just-once"
@@ -221,13 +229,14 @@ export function Markdown(props: {
   ext?: string
   readme?: boolean
   toc?: boolean
+  editPath?: string
 }) {
   const [encoding, setEncoding] = createSignal<string>("utf-8")
   const [show, setShow] = createSignal(true)
   const [markdownHTML, setMarkdownHTML] = createSignal<string>("")
   const mermaidTheme = useColorModeValue("default", "dark")
   const { isString, text } = useParseText(props.children)
-  const { pathname } = useRouter()
+  const { pathname, to } = useRouter()
 
   const md = createMemo(() => {
     const raw = text(encoding())
@@ -297,6 +306,31 @@ export function Markdown(props: {
           class={clsx("markdown-body", props.class)}
           innerHTML={markdownHTML()}
         />
+      </Show>
+      <Show when={props.editPath}>
+        <Box
+          pos="absolute"
+          right={!isString ? "$36" : 0}
+          top={0}
+          opacity={0.15}
+          _hover={{ opacity: 1 }}
+          zIndex={1}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          h="$8"
+          w="$8"
+        >
+          <Icon
+            as={FiEdit}
+            boxSize="$5"
+            color="currentcolor"
+            cursor="pointer"
+            onClick={() => {
+              to(props.editPath!)
+            }}
+          />
+        </Box>
       </Show>
       <Show when={!isString}>
         <EncodingSelect

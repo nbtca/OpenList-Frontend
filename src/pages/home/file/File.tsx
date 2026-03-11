@@ -6,12 +6,16 @@ import { objStore } from "~/store"
 import { Download } from "../previews/download"
 import { OpenWith } from "./open-with"
 import { getPreviews } from "../previews"
+import { useRouter } from "~/hooks"
 
 const File = () => {
+  const { searchParams } = useRouter()
   const previews = createMemo(() => {
     return getPreviews({ ...objStore.obj, provider: objStore.provider })
   })
-  const [cur, setCur] = createSignal(previews()[0])
+  const [cur, setCur] = createSignal(
+    previews().find((p) => p.name === searchParams["preview"]) || previews()[0],
+  )
   return (
     <Show when={previews().length > 1} fallback={<Download openWith />}>
       <VStack w="$full" spacing="$2">

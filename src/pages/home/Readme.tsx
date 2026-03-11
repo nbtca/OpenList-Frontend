@@ -12,6 +12,18 @@ export function Readme(props: {
   const cardBg = useColorModeValue("white", "$neutral3")
   const { proxyLink } = useLink()
   const { pathname } = useRouter()
+
+  const readmeObj = createMemo(() => {
+    if ([State.FetchingMore, State.Folder].includes(objStore.state)) {
+      return objStore.objs.find((item) =>
+        props.files.find(
+          (file) => file.toLowerCase() === item.name.toLowerCase(),
+        ),
+      )
+    }
+    return undefined
+  })
+
   const readme = createMemo(
     on(
       () => objStore.state,
@@ -23,15 +35,9 @@ export function Readme(props: {
         ) {
           return ""
         }
-        if ([State.FetchingMore, State.Folder].includes(objStore.state)) {
-          const obj = objStore.objs.find((item) =>
-            props.files.find(
-              (file) => file.toLowerCase() === item.name.toLowerCase(),
-            ),
-          )
-          if (obj) {
-            return proxyLink(obj, true)
-          }
+        const obj = readmeObj()
+        if (obj) {
+          return proxyLink(obj, true)
         }
         if (
           objStore[props.fromMeta] &&
@@ -61,6 +67,11 @@ export function Readme(props: {
             children={content()?.content}
             readme
             toc={props.fromMeta === "readme"}
+            editPath={
+              readmeObj()
+                ? `${pathname()}/${encodeURIComponent(readmeObj()!.name)}?preview=${encodeURIComponent("Text Editor")}`
+                : undefined
+            }
           />
         </MaybeLoading>
       </Box>

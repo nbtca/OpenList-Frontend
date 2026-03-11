@@ -7,6 +7,7 @@ export function EncodingSelect(props: {
   encoding: string
   setEncoding: (encoding: string) => void
   referenceText?: string | ArrayBuffer
+  right?: number | string
 }) {
   const encodingLabels = [
     "utf-8",
@@ -73,7 +74,7 @@ export function EncodingSelect(props: {
   return (
     <Box
       pos="absolute"
-      right={0}
+      right={props.right ?? 0}
       top={0}
       w="$36"
       opacity={0.15}
