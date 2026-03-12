@@ -1,6 +1,6 @@
 import { Box, useColorModeValue } from "@hope-ui/solid"
 import { createMemo, Show, createResource, on } from "solid-js"
-import { Markdown, MaybeLoading } from "~/components"
+import { Markdown, MaybeLoading, IsolatedHtml } from "~/components"
 import { useLink, useRouter, useParseText } from "~/hooks"
 import { getSettingBool, objStore, State, me } from "~/store"
 import { fetchText, api, pathJoin } from "~/utils"
@@ -112,10 +112,7 @@ export function Readme(props: {
               />
             }
           >
-            <Box
-              w="$full"
-              innerHTML={useParseText(content()?.content).text()}
-            />
+            <IsolatedHtml content={useParseText(content()?.content).text()} />
           </Show>
         </MaybeLoading>
       </Box>
