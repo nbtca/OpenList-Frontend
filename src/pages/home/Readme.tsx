@@ -1,9 +1,9 @@
 import { Box, useColorModeValue } from "@hope-ui/solid"
 import { createMemo, Show, createResource, on } from "solid-js"
 import { Markdown, MaybeLoading } from "~/components"
-import { useLink, useRouter } from "~/hooks"
-import { getSettingBool, objStore, State } from "~/store"
-import { fetchText } from "~/utils"
+import { useLink, useRouter, useParseText } from "~/hooks"
+import { getSettingBool, objStore, State, me } from "~/store"
+import { fetchText, api, pathJoin } from "~/utils"
 
 export function Readme(props: {
   files: string[]
@@ -15,13 +15,45 @@ export function Readme(props: {
 
   const readmeObj = createMemo(() => {
     if ([State.FetchingMore, State.Folder].includes(objStore.state)) {
-      return objStore.objs.find((item) =>
+      const obj = objStore.objs.find((item) =>
         props.files.find(
           (file) => file.toLowerCase() === item.name.toLowerCase(),
         ),
       )
+      if (obj) return obj
+      return props.fromMeta === "readme"
+        ? objStore.readme_obj
+        : objStore.header_obj
     }
     return undefined
+  })
+
+  // Whether the content is sourced from metadata (admin-set)
+  const isFromMeta = createMemo(
+    on(
+      () => objStore.state,
+      () => {
+        if (
+          ![State.FetchingMore, State.Folder, State.File].includes(
+            objStore.state,
+          )
+        ) {
+          return false
+        }
+        if (readmeObj()) return false
+        return !!(
+          objStore[props.fromMeta] &&
+          typeof objStore[props.fromMeta] === "string"
+        )
+      },
+    ),
+  )
+
+  // Whether the metadata value is a local HTML file path to render as HTML
+  const isMetaHtml = createMemo(() => {
+    if (!isFromMeta()) return false
+    const metaVal = objStore[props.fromMeta] as string
+    return metaVal.startsWith("/") && metaVal.toLowerCase().endsWith(".html")
   })
 
   const readme = createMemo(
@@ -55,6 +87,8 @@ export function Readme(props: {
     }
     if (/^https?:\/\//g.test(readme)) {
       res = await fetchText(readme)
+    } else if (readme.startsWith("/")) {
+      res = await fetchText(api + "/d" + pathJoin(me().base_path, readme))
     }
     return res
   }
@@ -63,16 +97,26 @@ export function Readme(props: {
     <Show when={getSettingBool("readme_autorender") && readme()}>
       <Box w="$full" rounded="$xl" p="$4" bgColor={cardBg()} shadow="$lg">
         <MaybeLoading loading={content.loading}>
-          <Markdown
-            children={content()?.content}
-            readme
-            toc={props.fromMeta === "readme"}
-            editPath={
-              readmeObj()
-                ? `${pathname()}/${encodeURIComponent(readmeObj()!.name)}?preview=${encodeURIComponent("Text Editor")}`
-                : undefined
+          <Show
+            when={isMetaHtml()}
+            fallback={
+              <Markdown
+                children={content()?.content}
+                readme
+                toc={props.fromMeta === "readme"}
+                editPath={
+                  readmeObj()
+                    ? `${pathname()}/${encodeURIComponent(readmeObj()!.name)}?preview=${encodeURIComponent("Text Editor")}`
+                    : undefined
+                }
+              />
             }
-          />
+          >
+            <Box
+              w="$full"
+              innerHTML={useParseText(content()?.content).text()}
+            />
+          </Show>
         </MaybeLoading>
       </Box>
     </Show>

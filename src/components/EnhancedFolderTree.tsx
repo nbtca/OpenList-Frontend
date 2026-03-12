@@ -1,4 +1,20 @@
-import { Box, HStack, Icon, Spinner, Text, VStack } from "@hope-ui/solid"
+import {
+  Box,
+  HStack,
+  Icon,
+  Spinner,
+  Text,
+  VStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Input,
+  Button,
+} from "@hope-ui/solid"
 import { BiSolidRightArrow, BiSolidFolderOpen } from "solid-icons/bi"
 import { TbFile, TbFolder } from "solid-icons/tb"
 import {
@@ -37,8 +53,10 @@ export interface EnhancedFolderTreeProps {
   showHiddenFolder?: boolean
 }
 
-interface EnhancedFolderTreeContext
-  extends Omit<EnhancedFolderTreeProps, "handle"> {
+interface EnhancedFolderTreeContext extends Omit<
+  EnhancedFolderTreeProps,
+  "handle"
+> {
   value: Accessor<string>
 }
 
@@ -234,4 +252,73 @@ function createDisclosure() {
     onOpen: () => setIsOpen(true),
     onClose: () => setIsOpen(false),
   }
+}
+
+export const ModalFileChoose = (props: {
+  opened: boolean
+  onClose: () => void
+  onSubmit?: (path: string) => void
+  defaultValue?: string
+  header: string
+  loading?: boolean
+}) => {
+  const t = useT()
+  const [value, setValue] = createSignal(props.defaultValue || "/")
+  return (
+    <Modal size="xl" opened={props.opened} onClose={props.onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalCloseButton />
+        <ModalHeader>{props.header}</ModalHeader>
+        <ModalBody>
+          <EnhancedFolderTree onChange={setValue} autoOpen />
+        </ModalBody>
+        <ModalFooter>
+          <HStack spacing="$2">
+            <Button onClick={props.onClose} colorScheme="neutral">
+              {t("global.cancel")}
+            </Button>
+            <Button
+              loading={props.loading}
+              onClick={() => props.onSubmit?.(value())}
+            >
+              {t("global.ok")}
+            </Button>
+          </HStack>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  )
+}
+
+export const FileChooseInput = (props: {
+  value: string
+  onChange: (path: string) => void
+  id?: string
+}) => {
+  const { isOpen, onOpen, onClose } = createDisclosure()
+  const t = useT()
+  return (
+    <>
+      <HStack w="$full" spacing="$2">
+        <Input
+          id={props.id}
+          value={props.value}
+          onInput={(e) => props.onChange(e.currentTarget.value)}
+          placeholder={t("global.choose_or_input_path")}
+        />
+        <Button onClick={onOpen}>{t("global.choose")}</Button>
+      </HStack>
+      <ModalFileChoose
+        opened={isOpen()}
+        onClose={onClose}
+        header={t("acl.meta_content.choose_file")}
+        defaultValue={props.value}
+        onSubmit={(path) => {
+          props.onChange(path)
+          onClose()
+        }}
+      />
+    </>
+  )
 }

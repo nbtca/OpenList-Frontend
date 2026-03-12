@@ -16,6 +16,8 @@ export type FsListResp = Resp<{
   total: number
   readme: string
   header: string
+  readme_obj?: Obj
+  header_obj?: Obj
   write: boolean
   provider: string
   permissions: number // ACL permissions bitmask
@@ -38,6 +40,8 @@ export type FsGetResp = Resp<
     raw_url: string
     readme: string
     header: string
+    readme_obj?: Obj
+    header_obj?: Obj
     provider: string
     related: Obj[]
   }

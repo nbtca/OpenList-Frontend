@@ -10,13 +10,14 @@ import {
   Flex,
   Textarea,
   FormHelperText,
+  HStack,
 } from "@hope-ui/solid"
-import { MaybeLoading, FolderChooseInput } from "~/components"
+import { MaybeLoading, FolderChooseInput, FileChooseInput } from "~/components"
 import { useFetch, useRouter, useT } from "~/hooks"
 import { handleResp, notify, r } from "~/utils"
 import { Meta, PEmptyResp, PResp } from "~/types"
 import { createStore } from "solid-js/store"
-import { For, Show } from "solid-js"
+import { createEffect, createSignal, For, Show } from "solid-js"
 
 type ItemProps = {
   name: string
@@ -28,6 +29,108 @@ type ItemProps = {
   | { type: "text"; value: string; onChange: (val: string) => void }
   | { type: "bool"; value: boolean; onChange: (val: boolean) => void }
 )
+
+// Detect if a value is a local file path (starts with /)
+const isFilePath = (v: string) => v.startsWith("/")
+
+// Specialised field for header/readme: toggle between content and HTML-file modes
+const HtmlOrContentItem = (props: {
+  name: string
+  sub?: boolean
+  onSub: (val: boolean) => void
+  value: string
+  onChange: (val: string) => void
+  help?: boolean
+}) => {
+  const t = useT()
+  // auto-detect mode from existing saved value
+  const [userToggled, setUserToggled] = createSignal(false)
+  const [fileMode, setFileMode] = createSignal(isFilePath(props.value))
+  // Re-sync when the store value arrives asynchronously (edit mode API response)
+  createEffect(() => {
+    if (!userToggled()) {
+      setFileMode(isFilePath(props.value))
+    }
+  })
+
+  const switchToContent = () => {
+    setUserToggled(true)
+    setFileMode(false)
+    props.onChange("") // clear file path
+  }
+  const switchToFile = () => {
+    setUserToggled(true)
+    setFileMode(true)
+    props.onChange("") // clear text content
+  }
+
+  return (
+    <FormControl w="$full" display="flex" flexDirection="column">
+      <FormLabel for={props.name} display="flex" alignItems="center">
+        {t(`metas.${props.name}`)}
+      </FormLabel>
+      <Flex
+        w="$full"
+        direction={{ "@initial": "column", "@md": "row" }}
+        gap="$2"
+      >
+        <VStack w="$full" spacing="$2" alignItems="start">
+          {/* Mode toggle */}
+          <HStack spacing="$2">
+            <Button
+              size="sm"
+              colorScheme={fileMode() ? "neutral" : "accent"}
+              onClick={switchToContent}
+            >
+              {t("acl.meta_content.mode_content")}
+            </Button>
+            <Button
+              size="sm"
+              colorScheme={fileMode() ? "accent" : "neutral"}
+              onClick={switchToFile}
+            >
+              {t("acl.meta_content.mode_html_file")}
+            </Button>
+          </HStack>
+          {/* Input area */}
+          <Show
+            when={fileMode()}
+            fallback={
+              <Textarea
+                id={props.name}
+                w="$full"
+                value={props.value}
+                onChange={(e) => props.onChange(e.currentTarget.value)}
+              />
+            }
+          >
+            <FileChooseInput
+              id={props.name}
+              value={props.value}
+              onChange={props.onChange}
+            />
+          </Show>
+        </VStack>
+        <FormControl w="fit-content" display="flex">
+          <Checkbox
+            css={{ whiteSpace: "nowrap" }}
+            id={`${props.name}_sub`}
+            onChange={(e: any) => props.onSub(e.currentTarget.checked)}
+            color="$neutral10"
+            fontSize="$sm"
+            checked={props.sub}
+          >
+            {t("metas.apply_sub")}
+          </Checkbox>
+        </FormControl>
+      </Flex>
+      <Show when={props.help}>
+        <FormHelperText>{t(`metas.${props.name}_help`)}</FormHelperText>
+      </Show>
+    </FormControl>
+  )
+}
+
 const Item = (props: ItemProps) => {
   const t = useT()
   return (
@@ -127,25 +230,12 @@ const AddOrEdit = () => {
             onChange={(path) => setMeta("path", path)}
           />
         </FormControl>
-        {/* <FormControl w="$full" display="flex" flexDirection="column" required>
-          <FormLabel for="password" display="flex" alignItems="center">
-            {t(`metas.password`)}
-          </FormLabel>
-          <Input
-            id="password"
-            placeholder="********"
-            value={meta.password}
-            onInput={(e) => setMeta("password", e.currentTarget.value)}
-          />
-        </FormControl> */}
         <For
           each={
             [
               { name: "password", type: "string", sub: "p_sub" },
               { name: "write", type: "bool", sub: "w_sub" },
               { name: "hide", type: "text", sub: "h_sub", help: true },
-              { name: "header", type: "text", sub: "header_sub", help: true },
-              { name: "readme", type: "text", sub: "r_sub", help: true },
             ] as const
           }
         >
@@ -164,11 +254,28 @@ const AddOrEdit = () => {
             )
           }}
         </For>
+        {/* Header: content or HTML file, mutually exclusive */}
+        <HtmlOrContentItem
+          name="header"
+          value={meta.header}
+          onChange={(val) => setMeta("header", val)}
+          sub={meta.header_sub}
+          onSub={(val) => setMeta("header_sub", val)}
+          help
+        />
+        {/* Readme: content or HTML file, mutually exclusive */}
+        <HtmlOrContentItem
+          name="readme"
+          value={meta.readme}
+          onChange={(val) => setMeta("readme", val)}
+          sub={meta.r_sub}
+          onSub={(val) => setMeta("r_sub", val)}
+          help
+        />
         <Button
           loading={okLoading()}
           onClick={async () => {
             const resp = await ok()
-            // TODO maybe can use handleRrespWithNotifySuccess
             handleResp(resp, () => {
               notify.success(t("global.save_success"))
               back()

@@ -27,6 +27,8 @@ const initialObjStore = {
 
   readme: "",
   header: "",
+  readme_obj: <Obj | undefined>undefined,
+  header_obj: <Obj | undefined>undefined,
   provider: "",
   permissions: 0, // ACL permissions bitmask
   direct_upload_tools: <string[] | undefined>undefined,
@@ -65,6 +67,8 @@ export const ObjStore = {
   },
   setReadme: (readme: string) => setObjStore("readme", readme),
   setHeader: (header: string) => setObjStore("header", header),
+  setReadmeObj: (readme_obj?: Obj) => setObjStore("readme_obj", readme_obj),
+  setHeaderObj: (header_obj?: Obj) => setObjStore("header_obj", header_obj),
   setRelated: (related: Obj[]) => setObjStore("related", related),
   setWrite: (write: boolean) => setObjStore("write", write),
   setPermissions: (permissions: number) =>

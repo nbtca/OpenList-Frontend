@@ -29,5 +29,10 @@
     "sso_login": "Login with Single Sign-On"
   },
   "is_regex": "Match role using regular expressions",
-  "exclude_subfolder": "Exclude subfolders (do not match /* automatically)"
+  "exclude_subfolder": "Exclude subfolders (do not match /* automatically)",
+  "meta_content": {
+    "choose_file": "Select File",
+    "mode_content": "Content",
+    "mode_html_file": "HTML File"
+  }
 }

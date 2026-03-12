@@ -29,5 +29,10 @@
         "sso_login": "统一身份认证"
     },
     "is_regex": "使用正则表达式匹配角色",
-    "exclude_subfolder": "不包含子文件夹（不自动匹配.../*）"
+    "exclude_subfolder": "不包含子文件夹（不自动匹配.../*）",
+    "meta_content": {
+        "choose_file": "选择文件",
+        "mode_content": "直接输入",
+        "mode_html_file": "HTML文件"
+    }
 }
