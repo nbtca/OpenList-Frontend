@@ -3,7 +3,7 @@ import { createMemo, Show, createResource, on } from "solid-js"
 import { Markdown, MaybeLoading, IsolatedHtml } from "~/components"
 import { useLink, useRouter, useParseText } from "~/hooks"
 import { getSettingBool, objStore, State, me } from "~/store"
-import { fetchText, api, pathJoin } from "~/utils"
+import { fetchText, api, pathJoin, fsGet } from "~/utils"
 
 export function Readme(props: {
   files: string[]
@@ -88,7 +88,18 @@ export function Readme(props: {
     if (/^https?:\/\//g.test(readme)) {
       res = await fetchText(readme)
     } else if (readme.startsWith("/")) {
-      res = await fetchText(api + "/d" + pathJoin(me().base_path, readme))
+      const fullPath = pathJoin(me().base_path, readme)
+      const resp = await fsGet(fullPath)
+      const obj = resp.data
+      if (obj) {
+        const sign = obj.sign
+        const url =
+          api +
+          "/d" +
+          fullPath +
+          (sign ? `?sign=${encodeURIComponent(sign)}` : "")
+        res = await fetchText(url)
+      }
     }
     return res
   }
