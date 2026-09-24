@@ -62,7 +62,7 @@ const BackupRestore = () => {
   const [password, setPassword] = createSignal("")
   const t = useT()
   useManageTitle("manage.sidemenu.backup-restore")
-  let logRef: HTMLDivElement
+  let logRef!: HTMLDivElement
   const [log, setLog] = createSignal<
     {
       type: LogType
@@ -73,20 +73,20 @@ const BackupRestore = () => {
     setLog((prev) => [...prev, { type, msg }])
     logRef.scrollTop = logRef.scrollHeight
   }
-  const [getSettingsLoading, getSettings] = useFetch(
-    (): PResp<any> => r.get("/admin/setting/list"),
+  const [getSettingsLoading, getSettings] = useFetch((): PResp<any> =>
+    r.get("/admin/setting/list"),
   )
-  const [getUsersLoading, getUsers] = useFetch(
-    (): PPageResp<User> => r.get("/admin/user/list"),
+  const [getUsersLoading, getUsers] = useFetch((): PPageResp<User> =>
+    r.get("/admin/user/list"),
   )
-  const [getMetasLoading, getMetas] = useFetch(
-    (): PPageResp<Meta> => r.get("/admin/meta/list"),
+  const [getMetasLoading, getMetas] = useFetch((): PPageResp<Meta> =>
+    r.get("/admin/meta/list"),
   )
-  const [getStoragesLoading, getStorages] = useFetch(
-    (): PPageResp<Storage> => r.get("/admin/storage/list"),
+  const [getStoragesLoading, getStorages] = useFetch((): PPageResp<Storage> =>
+    r.get("/admin/storage/list"),
   )
-  const [getSharesLoading, getShares] = useFetch(
-    (): PPageResp<ShareInfo> => r.get("/share/list"),
+  const [getSharesLoading, getShares] = useFetch((): PPageResp<ShareInfo> =>
+    r.get("/share/list"),
   )
   const backupLoading = () => {
     return (
@@ -300,9 +300,9 @@ const BackupRestore = () => {
             appendLog(t("br.wrong_encrypt_password"), "error")
             return
           }
-        const dataasarray = Object.values(data)
-        for (let i = dataasarray.length - 4; i < dataasarray.length; i++) {
-          const obj = dataasarray[i]
+        const dataArray = Object.values(data)
+        for (let i = dataArray.length - 4; i < dataArray.length; i++) {
+          const obj = dataArray[i]
           console.log(obj)
           for (let a = 0; a < obj.length; a++) {
             const obj1 = obj[a]

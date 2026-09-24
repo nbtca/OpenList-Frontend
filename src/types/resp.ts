@@ -19,6 +19,7 @@ export type FsListResp = Resp<{
   readme_obj?: Obj
   header_obj?: Obj
   write: boolean
+  write_content_bypass: boolean
   provider: string
   permissions: number // ACL permissions bitmask
   direct_upload_tools?: string[]

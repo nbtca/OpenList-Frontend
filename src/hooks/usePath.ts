@@ -11,6 +11,7 @@ import {
   recoverHistory,
   clearHistory,
   me,
+  shouldKeepState,
 } from "~/store"
 import {
   fsGet,
@@ -120,7 +121,7 @@ export const usePath = () => {
 
   // handle enter obj that don't know if it is dir or file
   const handleObj = async (path: string, index?: number) => {
-    ObjStore.setState(State.FetchingObj)
+    shouldKeepState() || ObjStore.setState(State.FetchingObj)
     const resp = await getObj(path)
     handleRespWithoutNotify(
       resp,
@@ -137,7 +138,7 @@ export const usePath = () => {
           ObjStore.setHeaderObj(data.header_obj)
           ObjStore.setRelated(data.related ?? [])
           ObjStore.setRawUrl(data.raw_url)
-          ObjStore.setState(State.File)
+          shouldKeepState() || ObjStore.setState(State.File)
         }
       },
       handleErr,
@@ -159,7 +160,7 @@ export const usePath = () => {
     if (size !== undefined && pagination.type === "all") {
       size = undefined
     }
-    !onlyList &&
+    if (!onlyList && !shouldKeepState())
       ObjStore.setState(append ? State.FetchingMore : State.FetchingObjs)
     const resp = await getObjs({ path, index, size, force })
     handleRespWithoutNotify(
@@ -180,12 +181,19 @@ export const usePath = () => {
         ObjStore.setReadmeObj(data.readme_obj)
         ObjStore.setHeaderObj(data.header_obj)
         ObjStore.setWrite(data.write)
+        ObjStore.setWriteContentBypass(data.write_content_bypass)
         ObjStore.setProvider(data.provider)
         ObjStore.setPermissions(data.permissions ?? 0)
         ObjStore.setDirectUploadTools(data.direct_upload_tools)
-        ObjStore.setState(State.Folder)
+        shouldKeepState() || ObjStore.setState(State.Folder)
       },
-      handleErr,
+      onlyList
+        ? (msg: string, code?: number) => {
+            if (code !== 403) {
+              handleErr(msg, code)
+            }
+          }
+        : handleErr,
     )
   }
 

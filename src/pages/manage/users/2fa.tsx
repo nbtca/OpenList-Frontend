@@ -13,8 +13,8 @@ interface Generate2FA {
 
 const TwoFA = () => {
   const { back } = useRouter()
-  const [generateLoading, generate] = useFetch(
-    (): PResp<Generate2FA> => r.post("/auth/2fa/generate"),
+  const [generateLoading, generate] = useFetch((): PResp<Generate2FA> =>
+    r.post("/auth/2fa/generate"),
   )
   const t = useT()
   const [otpData, setOtpData] = createSignal<Generate2FA>()
@@ -29,12 +29,11 @@ const TwoFA = () => {
   }
   const [code, setCode] = createSignal("")
   init()
-  const [verifyLoadind, verify] = useFetch(
-    (): PEmptyResp =>
-      r.post("/auth/2fa/verify", {
-        code: code(),
-        secret: otpData()?.secret,
-      }),
+  const [verifyLoading, verify] = useFetch((): PEmptyResp =>
+    r.post("/auth/2fa/verify", {
+      code: code(),
+      secret: otpData()?.secret,
+    }),
   )
   const verify2FA = async () => {
     const resp = await verify()
@@ -64,7 +63,7 @@ const TwoFA = () => {
               }
             }}
           />
-          <Button loading={verifyLoadind()} onClick={verify2FA}>
+          <Button loading={verifyLoading()} onClick={verify2FA}>
             {t("users.verify")}
           </Button>
         </VStack>
